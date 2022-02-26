@@ -1,9 +1,9 @@
-# DevSummit-Presentations
+# Esri Developer Summit Presentations
 This repository contains all the resources used for Esri Developer Summit presentations that I have authored and coauthored.
 
 ## 2022
 ### ArcGIS API for JavaScript: Programming Patterns and API Fundamentals
-_CoAuthored with Hugo Campos and Rene Rubalcava_
+_CoAuthored with Hugo Campos and [Rene Rubalcava](https://github.com/odoe)_
 
 In this session, you'll learn the basics of the ArcGIS API for JavaScript, including the fundamentals of watching for property changes, autocasting, working with collections, and lazy-loading data in your applications. You'll learn more details about maps, webmaps, layers, 2D and 3D views, UI, and widgets. This is a key session for developers new to the 4.x version of the API.
 
