@@ -10,4 +10,6 @@ In this session, you'll learn the basics of the ArcGIS API for JavaScript, inclu
 ### ArcGIS API for JavaScript: Building Web Apps Using Data from Anywhere
 _CoAuthored with [Jose Banuelos](https://github.com/banuelosj)_
 
+![Data From Anywhere Title Slide](./images/DataFromAnywhere.png)
+
 GeoJSON, CSV, and OGC data can easily be brought in as layers with the ArcGIS API for JavaScript. In this demo theater, we will build an application that will take advantage of the many capabilities of these layer types.
