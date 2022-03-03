@@ -5,9 +5,7 @@ require([
   "esri/smartMapping/renderers/color",
   "esri/smartMapping/renderers/type",
   "esri/smartMapping/renderers/dotDensity",
-  "esri/smartMapping/symbology/dotDensity",
-  "esri/widgets/Legend",
-  "esri/Color",
+  "esri/widgets/Legend"
 ], (
   Map,
   MapView,
@@ -15,12 +13,11 @@ require([
   colorRendererCreator,
   typeRendererCreator,
   dotDensityRendererCreator,
-  dotDensitySchemes,
   Legend,
-  Color
 ) => {
   const electionURL =
     "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/California_Presidential_Election_Results_2016/FeatureServer/0";
+  // create feature layer and add to map
   const map = new Map({
     basemap: "topo-vector",
   });
@@ -34,16 +31,19 @@ require([
   });
   view.popup.defaultPopupTemplateEnabled = true;
 
+  // when the featurelayer loads, zoom to the extent
   electionResults.when(() => {
     view.extent = electionResults.fullExtent;
   });
 
+  // add legend to view
   const legend = new Legend({
     view: view,
     container: "legendDiv",
   });
   view.ui.add("infoDiv", "top-right");
 
+  // set up event listener for dropdown to change renderer
   const dropdown = document.getElementById("drop-down");
   dropdown.addEventListener("calciteDropdownSelect", (event) => {
     const chosenValue = event.target.selectedItems[0].innerText;
@@ -62,8 +62,9 @@ require([
     }
   });
 
+  // function to create unique value renderer
   function uniqueValue() {
-    // visualization based on categorical field
+    // visualization based on Arcade Expression
     let typeParams = {
       layer: electionResults,
       view: view,
@@ -79,6 +80,7 @@ require([
     });
   }
 
+  // function to create DotDensityRenderer
   function dotDensity() {
     const params = {
       layer: electionResults,
@@ -94,7 +96,7 @@ require([
         },
       ],
       legendOptions: {
-        //unit: "people"
+        unit: "people",
       },
     };
 
@@ -104,23 +106,26 @@ require([
     });
   }
 
-  function classBreaks(){
-      // visualization based on field and normalization field
+  // function to create Class Breaks Renderer
+  // +1 if Clinton had the higher distribution
+  // -1 if Trump had the higher distribution
+  function classBreaks() {
+    // visualization based on field and normalization field
     let colorParams = {
-        layer: electionResults,
-        view: view,
-        classificationMethod: "equal-interval",
-        numClasses: 6,
-        valueExpression:
-          "($feature.G16PREDCli - $feature.G16PRERTru) / ($feature.G16PREDCli + $feature.G16PRERTru)",
-        valueExpressionTitle: "Voting Distribution",
-      };
-  
-      // when the promise resolves, apply the renderer to the layer
-      colorRendererCreator
-        .createClassBreaksRenderer(colorParams)
-        .then(function (response) {
-          electionResults.renderer = response.renderer;
-        });
+      layer: electionResults,
+      view: view,
+      classificationMethod: "equal-interval",
+      numClasses: 6,
+      valueExpression:
+        "($feature.G16PREDCli - $feature.G16PRERTru) / ($feature.G16PREDCli + $feature.G16PRERTru)",
+      valueExpressionTitle: "Voting Distribution",
+    };
+
+    // when the promise resolves, apply the renderer to the layer
+    colorRendererCreator
+      .createClassBreaksRenderer(colorParams)
+      .then(function (response) {
+        electionResults.renderer = response.renderer;
+      });
   }
 });
