@@ -1,10 +1,8 @@
 require([
   "esri/Map",
   "esri/views/MapView",
-  "esri/layers/MapImageLayer",
-  "esri/widgets/Legend",
-  "esri/smartMapping/renderers/color",
-], function (Map, MapView, MapImageLayer, Legend, colorRendererCreator) {
+  "esri/layers/MapImageLayer"
+], function (Map, MapView, MapImageLayer) {
   const layer = new MapImageLayer({
     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
     sublayers: [
@@ -27,32 +25,12 @@ require([
     zoom: 10
   });
 
-  const legend = new Legend({ view });
-  view.ui.add(legend, "bottom-right");
-
   layer.load().then(async (_) => {
     const sublayer = layer.findSublayerById(0);
     const fLayer = await sublayer.createFeatureLayer();
+    fLayer.outFields = ['*'];
     // Add new feature layer to map to create layerview
     map.add(fLayer);
-
-    // Create smartmapping renderer
-    const colorParams = {
-      layer: fLayer,
-      view,
-      field: "RENTER_OCC",
-      normalizationField: "HSE_UNITS",
-      legendOptions: {
-        title: "Renter Occupied (Housing Units)",
-      },
-    };
-    // when the promise resolves, apply the renderer to the sublayer
-    colorRendererCreator
-      .createClassBreaksRenderer(colorParams)
-      .then((response) => {
-        fLayer.renderer = response.renderer;
-      })
-      .catch((error) => console.log(error));
 
       // Create LayerView
     view.whenLayerView(fLayer).then((layerView) => {
