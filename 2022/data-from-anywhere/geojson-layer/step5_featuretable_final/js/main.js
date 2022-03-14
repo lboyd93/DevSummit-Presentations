@@ -1,3 +1,7 @@
+/**
+ * Step 5: Add FeatureTable
+ * This sample demonstrates how to add a FeatureTable that references the GeoJSONLayer.
+ */
 require([
   "esri/Map",
   "esri/layers/GeoJSONLayer",
@@ -15,8 +19,7 @@ require([
   typeRendererCreator,
   FeatureTable
 ) => {
-  const firesURL = "https://opendata.arcgis.com/datasets/84fa4b424c1b4a9f91a1d4e014d4ad0b_0.geojson";
-  //const firesURL = "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/FirePerimeters.geojson";
+  const firesURL = "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/FirePerimeters.geojson";
 
   // Create popup template for layer
   const fireTemplate = {

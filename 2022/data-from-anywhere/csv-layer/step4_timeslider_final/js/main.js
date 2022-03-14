@@ -38,7 +38,7 @@ require([
         minSize: 8,  // the min size of the symbol
         maxSize: 40,  // the max size of the symbol
         legendOptions: {
-          title: "Wind Speed (kts)"  // override legend title for this layer
+          title: "Wind speed (kts)"  // override legend title for this layer
         }
       }
     ]
@@ -67,7 +67,7 @@ require([
           { value: 265, size: 32, label: "> 265 acres" }
         ],
         legendOptions: {
-          title: "Daily Acres burned (acres)"  // override legend title for this layer
+          title: "Daily acres burned"  // override legend title for this layer
         }
       }
     ]
@@ -129,7 +129,7 @@ require([
   // initialize a CSVLayer
   const windCSVLayer = new CSVLayer({
     title: "Wind Station Data",
-    url: "https://jbanuelos1.esri.com/data/csv/wind_data_2_18_full.csv",
+    url: "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/wind_data_2_18_full.csv",
     copyright: "NOAA",
     popupTemplate: windPopupTemplate,
     renderer: windRenderer,
@@ -147,7 +147,7 @@ require([
   // display data from 2/18/2022 which is the date interval for the wind data layer
   const fireCSVLayer = new CSVLayer({
     title: "Wildland Fire Locations",
-    url: "https://jbanuelos1.esri.com/data/csv/WFIGS_2022_Wildland_Fire_Locations.csv",
+    url: "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/WFIGS_2022_Wildland_Fire_Locations.csv",
     copyright: "WFIGS",
     definitionExpression: `${dateField} > DATE '${startTime}' AND ${dateField} < DATE '${endTime}'`,
     popupTemplate: firePopupTemplate,
@@ -186,11 +186,7 @@ require([
   const timeSlider = new TimeSlider({
     container: "timeSlider",
     view: view,
-    timeVisible: true, // show the time stamps on the timeslider
-    fullTimeExtent: {
-      start: new Date("2022-02-18T14:30:00Z"),
-      end: new Date("2022-02-19T00:35:00Z")
-    }
+    timeVisible: true // show the time stamps on the timeslider
   });
 
   // set the TimeSlider widget time extent and stops

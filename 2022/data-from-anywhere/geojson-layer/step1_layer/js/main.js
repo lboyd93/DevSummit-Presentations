@@ -1,16 +1,22 @@
+/**
+ * Step 1: Add a GeoJSONLayer
+ * This sample demonstrates how to initialize GeoJSONLayers, and add them to the map.
+ */
+
 require([
   "esri/Map",
   "esri/layers/GeoJSONLayer",
   "esri/views/MapView",
-  "esri/layers/FeatureLayer"
+  "esri/layers/FeatureLayer",
+  "esri/widgets/Legend"
 ], (
   Map,
   GeoJSONLayer,
   MapView,
-  FeatureLayer
+  FeatureLayer,
+  Legend
 ) => {
-  const firesURL = "https://opendata.arcgis.com/datasets/84fa4b424c1b4a9f91a1d4e014d4ad0b_0.geojson";
-  //const firesURL = "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/FirePerimeters.geojson";
+  const firesURL = "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/FirePerimeters.geojson";
 
   // Create GeoJSONLayer from GeoJSON data
   const fireLayer = new GeoJSONLayer({
@@ -54,6 +60,19 @@ require([
       ymax: 5214430.898644948,
       spatialReference: { wkid: 102100 },
     },
-    map: map,
+    map: map
   });
+
+  // Create the Legend
+  const legend = new Legend({
+    view: view,
+    layerInfos: [
+      {
+        title: "California Fire Perimeters",
+        layer: fireLayer,
+      },
+    ],
+    container: "legend",
+  });
+  view.ui.add(legend, "top-right");
 });

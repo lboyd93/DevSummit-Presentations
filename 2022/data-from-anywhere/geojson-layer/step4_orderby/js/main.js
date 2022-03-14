@@ -1,3 +1,7 @@
+/**
+ * Step 4: Add layer ordering by fields
+ * This sample demonstrates how to add feature ordering within a layer based on a field.
+ */
 require([
   "esri/Map",
   "esri/layers/GeoJSONLayer",
@@ -13,8 +17,7 @@ require([
   FeatureLayer,
   typeRendererCreator
 ) => {
-  const firesURL = "https://opendata.arcgis.com/datasets/84fa4b424c1b4a9f91a1d4e014d4ad0b_0.geojson";
-  //const firesURL = "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/FirePerimeters.geojson";
+  const firesURL = "https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/data/FirePerimeters.geojson";
 
   // Create popup template for layer
   const fireTemplate = {

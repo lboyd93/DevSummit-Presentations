@@ -1,7 +1,8 @@
-# Live Links
+# Presentation Resources
 
-GeoJSONLayer [Demo](https://lboyd93.github.io/DevSummit-Presentations/2022/data-from-anywhere/geojson-layer/step5_featuretable_final/)
+PDF of Slides: https://github.com/banuelosj/DevSummit-presentation/blob/main/2022/csv-geojson-ogc/DataFromAnywhere-Slides.pdf
 
-Patterns [Demo](https://lboyd93.github.io/DevSummit-Presentations/2022/data-from-anywhere/csv-layer/step4_timeslider_final/)
-
-Smart Mapping [Demo](https://lboyd93.github.io/DevSummit-Presentations/2022/data-from-anywhere/ogc-layer/step4_feature_effect_final/)
+Final Live Demo Links:
+- GeoJSON Demo: https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/geojson-layer/step5_featuretable_final/
+- WFSLayer Demo: https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/ogc-layer/step4_feature_effect_final/
+- CSVLayer Demo: https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/csv-layer/step4_timeslider_final/
