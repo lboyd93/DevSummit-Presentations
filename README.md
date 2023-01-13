@@ -12,14 +12,18 @@ In this session, you’ll learn how to utilize recently added features in the Ma
 
 #### Page with links to [Demos](https://lboyd93.github.io/DevSummit-Presentations/2023/better-ux-popups/)
 
+----
+
 ### ArcGIS Maps SDK for JavaScript: Programming Patterns and API Fundamentals
 _CoAuthored with [Sage Wall](https://github.com/sagewall)_
 
-![Programming Patterns Title Slide](/2023/images/ProgrammingPatterns.jpg)
+![Programming Patterns Title Slide](/2023/images/ProgrammingPatterns.png)
 
 In this session, you'll learn the basics of the ArcGIS Maps SDK for JavaScript, including the fundamentals of watching for property changes, autocasting, working with collections, and lazy-loading data in your applications. You'll learn more details about maps, webmaps, layers, 2D and 3D views, UI, and widgets. This is a key session for developers new to the 4.x version of the API.
 
 #### Page with links to [Demos](https://lboyd93.github.io/DevSummit-Presentations/2023/programming-patterns/)
+
+----
 
 ### ArcGIS Maps SDK for JavaScript: Bring in Data from Anywhere
 _CoAuthored with [Jose Banuelos](https://github.com/banuelosj) and [Emily Hu]()_
@@ -39,6 +43,8 @@ _CoAuthored with [Hugo Campos](https://github.com/hccampos) and [Rene Rubalcava]
 In this session, you'll learn the basics of the ArcGIS API for JavaScript, including the fundamentals of watching for property changes, autocasting, working with collections, and lazy-loading data in your applications. You'll learn more details about maps, webmaps, layers, 2D and 3D views, UI, and widgets. This is a key session for developers new to the 4.x version of the API.
 
 #### Page with links to [Demos](https://lboyd93.github.io/DevSummit-Presentations/2022/programming-patterns/)
+
+----
 
 ### ArcGIS API for JavaScript: Building Web Apps Using Data from Anywhere
 _CoAuthored with [Jose Banuelos](https://github.com/banuelosj)_
