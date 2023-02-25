@@ -75,15 +75,19 @@ require([
 	});
 
 	function formatContentTrails(feature) {
-		let color = feature.graphic.attributes.ACCESS === "Open" ? "green" : "red";
+		let color =
+			feature.graphic.attributes.ACCESS === "Open" || "Unrestricted"
+				? "green"
+				: "red";
 		const textContent = new TextContent({
 			text:
 				`{TRAILNAME} is a <b>{MTFCC}</b> trail type. Trail is is currently <span style='color: ` +
 				color +
 				`;'>{ACCESS}</span>. <br>
-				Near {WATERSHED}.`,
+				Near {WATERSHED} and <span style='color: ` +
+				color +
+				`;'>{RESTRICTION}</span>.`,
 		});
-		console.log(textContent.text);
 		return [textContent];
 	}
 
