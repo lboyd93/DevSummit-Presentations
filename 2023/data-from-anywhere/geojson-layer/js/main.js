@@ -10,7 +10,7 @@ require([
 	"esri/widgets/ElevationProfile",
 	"esri/widgets/Expand",
 	"esri/layers/GroupLayer",
-	"esri/layers/TileLayer",
+	"esri/popup/content/TextContent",
 ], (
 	Map,
 	GeoJSONLayer,
@@ -20,7 +20,7 @@ require([
 	ElevationProfile,
 	Expand,
 	GroupLayer,
-	TileLayer
+	TextContent
 ) => {
 	const parkTrails =
 		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/Great_Smoky_Mountains_National_Park_3D_Trails.geojson";
@@ -40,7 +40,7 @@ require([
 			type: "simple",
 			symbol: {
 				type: "simple-line",
-				color: "white",
+				color: "dark-green",
 				width: "5px",
 				style: "short-dot",
 			},
@@ -70,19 +70,22 @@ require([
 					label: "Restriction",
 				},
 			],
-			content: [
-				{
-					type: "fields",
-				},
-				{
-					type: "text",
-					text: `{TRAILNAME} is a {MTFCC} trail type.<br>
-					Trail is currently {ACCESS} <br>
-					Resides in {COUNTY}, {STATE}`,
-				},
-			],
+			content: formatContentTrails,
 		},
 	});
+
+	function formatContentTrails(feature) {
+		let color = feature.graphic.attributes.ACCESS === "Open" ? "green" : "red";
+		const textContent = new TextContent({
+			text:
+				`{TRAILNAME} is a <b>{MTFCC}</b> trail type. Trail is is currently <span style='color: ` +
+				color +
+				`;'>{ACCESS}</span>. <br>
+				Near {WATERSHED}.`,
+		});
+		console.log(textContent.text);
+		return [textContent];
+	}
 
 	// Create GeoJSONLayer from GeoJSON data
 	const backCountryLayer = new GeoJSONLayer({
@@ -90,7 +93,7 @@ require([
 		copyright: "NPS",
 		title: "Campsites",
 		popupTemplate: {
-			title: "{NAME}",
+			title: "{LABEL} {TYPE}",
 			outFields: ["*"],
 			fieldInfos: [
 				{
@@ -118,15 +121,7 @@ require([
 					label: "Access type",
 				},
 			],
-			content: [
-				{
-					type: "text",
-					text: `{LABEL} is a {TYPE} campsite and resides along {TRAIL}.<br>
-					This site is currently {ACCESS} and is for {RULEID}. <br><br>
-					There are {CAPACITY} number of sites.
-					Resides in {COUNTY}, {STATE}`,
-				},
-			],
+			content: formatContent,
 		},
 		renderer: {
 			type: "simple",
@@ -197,6 +192,21 @@ require([
 			},
 		},
 	});
+
+	function formatContent(feature) {
+		let color = feature.graphic.attributes.ACCESS === "Open" ? "green" : "red";
+		const textContent = new TextContent({
+			text:
+				`<b>{LABEL}</b> resides along {TRAIL}. This site is currently <span style='color: ` +
+				color +
+				`;'>{ACCESS}</span>
+			and can be reached by {RULEID}. <br><br>
+			There are {CAPACITY} sites and resides in {COUNTY}, {STATE}.<br>
+			Site access restriction: {CAMP_RESTRICTION}.`,
+		});
+		console.log(textContent.text);
+		return [textContent];
+	}
 
 	// Create GeoJSONLayer from GeoJSON data
 	const boundaryLayer = new GeoJSONLayer({
