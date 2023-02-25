@@ -66,35 +66,6 @@ require([
 			},
 		};
 
-		const routeLayer = new RouteLayer();
-		const directions = new Directions({
-			view: view,
-			layer: routeLayer,
-			apiKey:
-				"AAPK091ca90725a849f799efca5816dd1035FaUAxHYP7hILxdNFvAzwy4PNCbuKvCqUubORoL0Lu7jTMTjswyxNty4etjYjBfLJ",
-			searchProperties: {
-				includeDefaultSources: false,
-				searchAllEnabled: false,
-				sources: [layerSearchSource],
-			},
-		});
-
-		const directionsContent = {
-			type: "custom",
-			outFields: ["*"],
-			creator: (event) => {
-				console.log(event);
-				const start = new Stop({
-					name: `${event.graphic.attributes.FIELD_6}`,
-					geometry: `${event.graphic.geometry}`,
-				});
-				const end = new Stop();
-				directions.layer.stops = [start, end];
-				return directions;
-			},
-		};
-
-		layer.popupTemplate.content.unshift(directionsContent);
 		layer.popupTemplate.content.unshift(searchContent);
 
 		console.log(layer.popupTemplate.content);
