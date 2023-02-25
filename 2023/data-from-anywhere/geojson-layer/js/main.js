@@ -1,67 +1,251 @@
 /**
- * Step 5: Add FeatureTable
- * This sample demonstrates how to add a FeatureTable that references the GeoJSONLayer.
+ * This sample demonstrates how to load GeoJSON data into an ArcGIS Maps SDK for JavaScript app.
  */
 require([
-  "esri/Map",
-  "esri/layers/GeoJSONLayer",
-  "esri/views/SceneView",
-  "esri/widgets/Legend",
-  "esri/core/reactiveUtils",
-  "esri/widgets/ElevationProfile",
-  "esri/widgets/Expand"
-], (Map, GeoJSONLayer, SceneView, Legend, reactiveUtils, ElevationProfile, Expand) => {
-  const parkTrails =
-    "https://laurenb.esri.com/DevSummit/2023/geojson/Great_Smoky_Mountains_National_Park_3D_Trails.geojson";
-  const campgrounds =
-    "https://laurenb.esri.com/DevSummit/2023/geojson/GRSM_CAMPGROUNDS.geojson";
+	"esri/Map",
+	"esri/layers/GeoJSONLayer",
+	"esri/views/SceneView",
+	"esri/widgets/Legend",
+	"esri/core/reactiveUtils",
+	"esri/widgets/ElevationProfile",
+	"esri/widgets/Expand",
+	"esri/layers/GroupLayer",
+	"esri/layers/TileLayer",
+], (
+	Map,
+	GeoJSONLayer,
+	SceneView,
+	Legend,
+	reactiveUtils,
+	ElevationProfile,
+	Expand,
+	GroupLayer,
+	TileLayer
+) => {
+	const parkTrails =
+		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/Great_Smoky_Mountains_National_Park_3D_Trails.geojson";
+	const backCountry =
+		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/GRSM_BACKCOUNTRY_CAMPSITES.geojson";
+	const parkBoundary =
+		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/GRSM_BOUNDARYPOLY.geojson";
 
-  // Create GeoJSONLayer from GeoJSON data
-  const trailsLayer = new GeoJSONLayer({
-    url: parkTrails,
-    copyright: "NPS",
-    title: "Trails",
-  });
+	// Create GeoJSONLayer from GeoJSON data
+	const trailsLayer = new GeoJSONLayer({
+		portalItem: {
+			id: "40b6a0b4f1c54acba332567aea7430e4",
+		},
+		copyright: "NPS",
+		title: "Trails",
+		renderer: {
+			type: "simple",
+			symbol: {
+				type: "simple-line",
+				color: "white",
+				width: "5px",
+				style: "short-dot",
+			},
+		},
+		popupTemplate: {
+			title: "{TRAILNAME}",
+			outFields: ["*"],
+			fieldInfos: [
+				{
+					fieldName: "DESIGN_USE",
+					label: "Design Use",
+				},
+				{
+					fieldName: "MTFCC",
+					label: "Trail",
+				},
+				{
+					fieldName: "PARKDISTRICT",
+					label: "Park District",
+				},
+				{
+					fieldName: "TRAILTYPE",
+					label: "Trail Type",
+				},
+				{
+					fieldName: "RESTRICTION",
+					label: "Restriction",
+				},
+			],
+			content: [
+				{
+					type: "fields",
+				},
+				{
+					type: "text",
+					text: `{TRAILNAME} is a {MTFCC} trail type.<br>
+					Trail is currently {ACCESS} <br>
+					Resides in {COUNTY}, {STATE}`,
+				},
+			],
+		},
+	});
 
-  // Create GeoJSONLayer from GeoJSON data
-  const campgroundsLayer = new GeoJSONLayer({
-    url: campgrounds,
-    copyright: "NPS",
-    title: "Campgrounds",
-  });
+	// Create GeoJSONLayer from GeoJSON data
+	const backCountryLayer = new GeoJSONLayer({
+		url: backCountry,
+		copyright: "NPS",
+		title: "Campsites",
+		popupTemplate: {
+			title: "{NAME}",
+			outFields: ["*"],
+			fieldInfos: [
+				{
+					fieldName: "TRAIL",
+					label: "Trail",
+				},
+				{
+					fieldName: "TYPE",
+					label: "Type of site",
+				},
+				{
+					fieldName: "CAMP_RESTRICTION",
+					label: "Restrictions",
+				},
+				{
+					fieldName: "PARKDISTRICT",
+					label: "District",
+				},
+				{
+					fieldName: "ACCESS",
+					label: "Access",
+				},
+				{
+					fieldName: "RULEID",
+					label: "Access type",
+				},
+			],
+			content: [
+				{
+					type: "text",
+					text: `{LABEL} is a {TYPE} campsite and resides along {TRAIL}.<br>
+					This site is currently {ACCESS} and is for {RULEID}. <br><br>
+					There are {CAPACITY} number of sites.
+					Resides in {COUNTY}, {STATE}`,
+				},
+			],
+		},
+		renderer: {
+			type: "simple",
+			symbol: {
+				type: "cim",
+				data: {
+					type: "CIMSymbolReference",
+					symbol: {
+						type: "CIMPointSymbol",
+						symbolLayers: [
+							{
+								type: "CIMVectorMarker",
+								enable: true,
+								anchorPointUnits: "Relative",
+								dominantSizeAxis3D: "Y",
+								size: 40,
+								billboardMode3D: "FaceNearPlane",
+								frame: {
+									xmin: 0,
+									ymin: 0,
+									xmax: 21,
+									ymax: 21,
+								},
+								markerGraphics: [
+									{
+										type: "CIMMarkerGraphic",
+										geometry: {
+											rings: [
+												[
+													[10.51, 12.96],
+													[8.63, 4.02],
+													[2, 4.02],
+													[10.5, 18],
+													[19, 4.02],
+													[12.4, 4.02],
+													[10.51, 12.96],
+												],
+											],
+										},
+										symbol: {
+											type: "CIMPolygonSymbol",
+											symbolLayers: [
+												{
+													type: "CIMSolidStroke",
+													enable: true,
+													capStyle: "Round",
+													joinStyle: "Round",
+													lineStyle3D: "Strip",
+													miterLimit: 10,
+													width: 0,
+													color: [0, 0, 0, 255],
+												},
+												{
+													type: "CIMSolidFill",
+													enable: true,
+													color: [181, 101, 30, 255],
+												},
+											],
+										},
+									},
+								],
+								scaleSymbolsProportionally: true,
+								respectFrame: true,
+							},
+						],
+					},
+				},
+			},
+		},
+	});
 
-  const map = new Map({
-    basemap: "satellite",
-    ground: "world-elevation",
-    layers: [trailsLayer, campgroundsLayer],
-  });
-  const view = new SceneView({
-    container: "viewDiv",
-    map: map,
-    popup: {
-        defaultPopupTemplateEnabled: true
-    }
-  });
+	// Create GeoJSONLayer from GeoJSON data
+	const boundaryLayer = new GeoJSONLayer({
+		url: parkBoundary,
+		copyright: "NPS",
+		title: "Park Boundary",
+		popupEnabled: false,
+		renderer: {
+			type: "simple",
+			symbol: {
+				type: "simple-fill",
+				color: null,
+				style: "solid",
+				outline: {
+					color: "black",
+				},
+			},
+		},
+	});
 
-  trailsLayer.when(() => {
-    view.extent = trailsLayer.fullExtent;
-    view.camera = {
-      position: [-83.6953602250087, 35.30029402538673, 10800],
-      tilt: 75,
-      heading: 44,
-    };
-  });
+	const map = new Map({
+		basemap: "osm",
+		ground: "world-elevation",
+		layers: [boundaryLayer, trailsLayer, backCountryLayer],
+	});
+	const view = new SceneView({
+		container: "viewDiv",
+		map: map,
+		popup: {
+			defaultPopupTemplateEnabled: true,
+		},
+	});
 
-  reactiveUtils.when(
-    () => !view.updating,
-    () => {
-      console.log(view.camera);
-    }
-  );
-  const elevationExpand = new Expand({
-    view,
-    content: new ElevationProfile({view})
-  });
-  view.ui.add(elevationExpand, "top-right");
-  view.ui.add(new Legend({view}), "bottom-left");
+	view.when(() => {
+		view.camera = {
+			position: [-83.6953602250087, 35.30029402538673, 10800],
+			tilt: 75,
+			heading: 44,
+		};
+	});
+	const elevationExpand = new Expand({
+		view,
+		content: new ElevationProfile({ view }),
+	});
+	const legendExpand = new Expand({
+		view,
+		content: new Legend({ view }),
+	});
+
+	view.ui.add(elevationExpand, "top-right");
+	view.ui.add(legendExpand, "bottom-left");
 });
