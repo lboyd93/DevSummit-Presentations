@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/esri.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fundamentals</title>
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-shell-panel slot="panel-start" position="start">
+        <calcite-tabs>
+          <calcite-tab-nav slot="title-group">
+            <calcite-tab-title selected tab="wells">Wells</calcite-tab-title>
+            <calcite-tab-title tab="stations">Stations</calcite-tab-title>
+            <calcite-tab-title tab="watches">Watches</calcite-tab-title>
+          </calcite-tab-nav>
+          <calcite-tab tab="wells">
+            <calcite-tile
+              heading="Number of oil and gas wells in the Layer"
+              description="server-side"
+            >
+              <calcite-chip slot="content-end" id="wellsLayerCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of oil and gas wells in the LayerView"
+              description="client-side"
+            >
+              <calcite-chip slot="content-end" id="wellsLayerViewCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of oil and gas wells in the view's extent"
+              description="client-side, spatial"
+            >
+              <calcite-chip slot="content-end" id="wellsLayerViewExtentCount"></calcite-chip>
+            </calcite-tile>
+          </calcite-tab>
+
+          <calcite-tab selected tab="stations">
+            <calcite-tile heading="Number of stations in the Layer" description="server-side">
+              <calcite-chip slot="content-end" id="stationsLayerCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile heading="Number of stations in the LayerView" description="client-side">
+              <calcite-chip slot="content-end" id="stationsLayerViewCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of stations in the view's extent"
+              description="client-side, spatial"
+            >
+              <calcite-chip slot="content-end" id="stationsLayerViewExtentCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-block
+              open
+              heading="MapView click event query"
+              description="client-side spatial and statistical queries"
+            >
+              <calcite-label>
+                where: "COUNTRY = 'Colorado, United States Of America'"
+                <calcite-switch id="whereSwitch"></calcite-switch
+              ></calcite-label>
+              <calcite-tile
+                heading="Number of stations within 50 miles of mouse click"
+                description="client-side, spatial, statistics"
+              >
+                <calcite-chip slot="content-end" id="stationsClickCount"></calcite-chip>
+              </calcite-tile>
+
+              <calcite-tile
+                heading="Average wind speed within 50 miles from mouse click"
+                description="client-side, spatial, statistics"
+              >
+                <calcite-chip slot="content-end" id="stationsClickAverageWindSpeed"></calcite-chip>
+              </calcite-tile>
+            </calcite-block>
+          </calcite-tab>
+
+          <calcite-tab tab="watches">
+            <calcite-tile
+              heading="Number of weather watches in the Layer"
+              description="server-side"
+            >
+              <calcite-chip slot="content-end" id="watchesLayerCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of weather watches in the LayerView"
+              description="client-side"
+            >
+              <calcite-chip slot="content-end" id="watchesLayerViewCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of weather watches in the view's extent"
+              description="client-side, spatial"
+            >
+              <calcite-chip slot="content-end" id="watchesLayerViewExtentCount"></calcite-chip>
+            </calcite-tile>
+          </calcite-tab>
+        </calcite-tabs>
+      </calcite-shell-panel>
+      <div id="viewDiv"></div>
+    </calcite-shell>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

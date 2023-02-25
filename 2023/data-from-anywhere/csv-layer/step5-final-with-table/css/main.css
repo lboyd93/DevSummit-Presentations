@@ -1,0 +1,34 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+}
+
+calcite-loader {
+  align-self: center;
+  justify-self: center;
+}
+
+#header-title {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#panel {
+  max-height: 650px;
+}
+
+#tablePanel {
+  position: absolute;
+  left: 5%;
+  bottom: 3%;
+  width: 92%;
+  height: 40%;
+}
