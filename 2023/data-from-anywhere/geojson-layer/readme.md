@@ -1,11 +1,9 @@
 # Demo Live Links:
 
-Step 1: [Adding GeoJSONLayer](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/geojson-layer/step1_layer/)
+Step 1: [Add GeoJSONLayer](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/geojson-layer/step1-add-layer)
 
-Step 2: [Adding Smartmapping Renderer](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/geojson-layer/step2_renderer/)
+Step 2: [Add Renderers](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/geojson-layer/step2-renderers)
 
-Step 3: [Adding Popup](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/geojson-layer/step3_popup)
+Step 3: [Update Popup](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/geojson-layer/step3-popups)
 
-Step 4: [Adding Feature Ordering by Field](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/geojson-layer/step4_orderby/)
-
-Step 5: [Adding FeatureTable](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/geojson-layer/step5_featuretable_final/)
+Step 4: [Add Elevation Profile](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/geojson-layer/final)

@@ -6,28 +6,12 @@ require([
 	"esri/layers/GeoJSONLayer",
 	"esri/views/SceneView",
 	"esri/widgets/Legend",
-	"esri/core/reactiveUtils",
-	"esri/widgets/ElevationProfile",
-	"esri/widgets/Expand",
-	"esri/layers/GroupLayer",
 	"esri/popup/content/TextContent",
-], (
-	Map,
-	GeoJSONLayer,
-	SceneView,
-	Legend,
-	reactiveUtils,
-	ElevationProfile,
-	Expand,
-	GroupLayer,
-	TextContent
-) => {
-	const parkTrails =
-		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/Great_Smoky_Mountains_National_Park_3D_Trails.geojson";
+], (Map, GeoJSONLayer, SceneView, Legend, TextContent) => {
 	const backCountry =
-		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/GRSM_BACKCOUNTRY_CAMPSITES.geojson";
+		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/geojson/GRSM_BACKCOUNTRY_CAMPSITES.geojson";
 	const parkBoundary =
-		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/GRSM_BOUNDARYPOLY.geojson";
+		"https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/data/geojson/GRSM_BOUNDARYPOLY.geojson";
 
 	// Create GeoJSONLayer from GeoJSON data
 	const trailsLayer = new GeoJSONLayer({
@@ -70,26 +54,9 @@ require([
 					label: "Restriction",
 				},
 			],
-			content: formatContentTrails,
+			content: formatContent,
 		},
 	});
-
-	function formatContentTrails(feature) {
-		let color =
-			feature.graphic.attributes.ACCESS === "Open" || "Unrestricted"
-				? "green"
-				: "red";
-		const textContent = new TextContent({
-			text:
-				`{TRAILNAME} is a <b>{MTFCC}</b> trail type. Trail is is currently <span style='color: ` +
-				color +
-				`;'>{ACCESS}</span>. <br>
-				Near {WATERSHED} and <span style='color: ` +
-				color +
-				`;'>{RESTRICTION}</span>.`,
-		});
-		return [textContent];
-	}
 
 	// Create GeoJSONLayer from GeoJSON data
 	const backCountryLayer = new GeoJSONLayer({
@@ -198,17 +165,31 @@ require([
 	});
 
 	function formatContent(feature) {
-		let color = feature.graphic.attributes.ACCESS === "Open" ? "green" : "red";
-		const textContent = new TextContent({
-			text:
+		// Check if the access type is open or unrestricted and set
+		// the color to green. Otherwise, set the color to red.
+		let color =
+			feature.graphic.attributes.ACCESS === "Open" || "Unrestricted"
+				? "green"
+				: "red";
+
+		let textContent = new TextContent();
+		// Create the text content and set the text depending on which layer
+		// the feature is from and return in an array.
+		if (feature.graphic.layer.title == "Campsites") {
+			textContent.text =
 				`<b>{LABEL}</b> resides along {TRAIL}. This site is currently <span style='color: ` +
 				color +
-				`;'>{ACCESS}</span>
-			and can be reached by {RULEID}. <br><br>
-			There are {CAPACITY} sites and resides in {COUNTY}, {STATE}.<br>
-			Site access restriction: {CAMP_RESTRICTION}.`,
-		});
-		console.log(textContent.text);
+				`;'>{ACCESS}</span> and can be reached by {RULEID}. <br><br>
+				There are {CAPACITY} sites and resides in {COUNTY}, {STATE}.<br>
+				Site access restriction: {CAMP_RESTRICTION}.`;
+		} else {
+			textContent.text =
+				`{TRAILNAME} is a <b>{MTFCC}</b> trail type. Trail is is currently <span style='color: ` +
+				color +
+				`;'>{ACCESS}</span>. <br> Near {WATERSHED} and <span style='color: ` +
+				color +
+				`;'>{RESTRICTION}</span>.`;
+		}
 		return [textContent];
 	}
 
@@ -240,6 +221,12 @@ require([
 		container: "viewDiv",
 		map: map,
 		qualityProfile: "high",
+		// Set the camera angle
+		camera: {
+			position: [-83.63075093329783, 35.330167678495506, 4415.732696997933],
+			tilt: 81.69077947429918,
+			heading: 29.83651654634004,
+		},
 		environment: {
 			weather: {
 				type: "cloudy", // autocasts as new CloudyWeather({ cloudCover: 0.3 })
@@ -248,29 +235,5 @@ require([
 		},
 	});
 
-	view.when(() => {
-		view.camera = {
-			position: [-83.63075093329783, 35.330167678495506, 4415.732696997933],
-			tilt: 81.69077947429918,
-			heading: 29.83651654634004,
-		};
-	});
-	const elevationExpand = new Expand({
-		view,
-		content: new ElevationProfile({ view }),
-	});
-	const legendExpand = new Expand({
-		view,
-		content: new Legend({ view }),
-	});
-
-	reactiveUtils.watch(
-		() => !view.updating,
-		() => {
-			console.log(view.camera);
-		}
-	);
-
-	view.ui.add(elevationExpand, "top-right");
-	view.ui.add(legendExpand, "bottom-left");
+	view.ui.add(new Legend({ view: view }), "bottom-left");
 });
