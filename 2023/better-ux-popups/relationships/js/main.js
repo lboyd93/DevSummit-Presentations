@@ -45,7 +45,7 @@ require([
 				},
 			],
 			content: [
-				// Add FieldContent to popup template.
+				// Add TextContent to popup template.
 				{
 					type: "text",
 					text: "The {UNIT} ({UNITCODE}) resides in the <b>{REGION}</b> region of California.",
