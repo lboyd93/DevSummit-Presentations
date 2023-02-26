@@ -250,9 +250,9 @@ require([
 
 	view.when(() => {
 		view.camera = {
-			position: [-83.62075354117981, 35.376406551418306, 6301.596312407404],
-			tilt: 74.26089027964844,
-			heading: 46.64125311677659,
+			position: [-83.63075093329783, 35.330167678495506, 4415.732696997933],
+			tilt: 81.69077947429918,
+			heading: 29.83651654634004,
 		};
 	});
 	const elevationExpand = new Expand({
@@ -263,6 +263,13 @@ require([
 		view,
 		content: new Legend({ view }),
 	});
+
+	reactiveUtils.watch(
+		() => !view.updating,
+		() => {
+			console.log(view.camera);
+		}
+	);
 
 	view.ui.add(elevationExpand, "top-right");
 	view.ui.add(legendExpand, "bottom-left");
