@@ -40,8 +40,8 @@ require([
 			type: "simple",
 			symbol: {
 				type: "simple-line",
-				color: "dark-green",
-				width: "5px",
+				color: "white",
+				width: "4px",
 				style: "short-dot",
 			},
 		},
@@ -175,13 +175,13 @@ require([
 													joinStyle: "Round",
 													lineStyle3D: "Strip",
 													miterLimit: 10,
-													width: 0,
+													width: 0.5,
 													color: [0, 0, 0, 255],
 												},
 												{
 													type: "CIMSolidFill",
 													enable: true,
-													color: [181, 101, 30, 255],
+													color: "#AC9362",
 												},
 											],
 										},
@@ -232,23 +232,27 @@ require([
 	});
 
 	const map = new Map({
-		basemap: "osm",
+		basemap: "satellite",
 		ground: "world-elevation",
 		layers: [boundaryLayer, trailsLayer, backCountryLayer],
 	});
 	const view = new SceneView({
 		container: "viewDiv",
 		map: map,
-		popup: {
-			defaultPopupTemplateEnabled: true,
+		qualityProfile: "high",
+		environment: {
+			weather: {
+				type: "cloudy", // autocasts as new CloudyWeather({ cloudCover: 0.3 })
+				cloudCover: 0.3,
+			},
 		},
 	});
 
 	view.when(() => {
 		view.camera = {
-			position: [-83.6953602250087, 35.30029402538673, 10800],
-			tilt: 75,
-			heading: 44,
+			position: [-83.62075354117981, 35.376406551418306, 6301.596312407404],
+			tilt: 74.26089027964844,
+			heading: 46.64125311677659,
 		};
 	});
 	const elevationExpand = new Expand({
