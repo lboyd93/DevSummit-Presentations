@@ -14,7 +14,7 @@ require(["esri/Map", "esri/layers/GeoJSONLayer", "esri/views/SceneView"], (
 	// Create GeoJSONLayer from GeoJSON data
 	const trailsLayer = new GeoJSONLayer({
 		portalItem: {
-			id: "40b6a0b4f1c54acba332567aea7430e4",
+			id: "5ccdbe2338984effb5e81b0c199df646",
 		},
 		copyright: "NPS",
 		title: "Trails",
