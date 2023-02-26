@@ -8,7 +8,7 @@ PDF of Slides: https://github.com/lboyd93/DevSummit-Presentations/blob/main/2022
 - CodePen Collection Link: https://codepen.io/collection/oEqwZb
 - Maps and Views Demo: https://lboyd93.github.io/DevSummit-Presentations/2023/programming-patterns/maps-views/
 - Smart Mapping Demo: https://lboyd93.github.io/DevSummit-Presentations/2023/programming-patterns/smartmapping/
-- Querying & LayerViews Demo Instructions: https://lboyd93.github.io/DevSummit-Presentations/2023/programming-patterns/querying-layerview
+- Querying & LayerViews Demo Instructions: https://github.com/lboyd93/DevSummit-Presentations/blob/main/2023/programming-patterns/querying-layerview/README.md
   
 ### Patterns:
 - Events: https://developers.arcgis.com/javascript/latest/sample-code/event-explorer/
