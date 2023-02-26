@@ -1,3 +1,13 @@
+/**
+ * Step 5: Final Application with FeatureTable widget
+ * Description: Demonstrates how you can incorporate the FeatureTable and some custom workflows
+ * with the CSVLayer. This application allows a user to draw an area using the SketchViewModel.
+ * It then queries the features of the CSVLayerView to return the features in that
+ * area. We take the objectids of the returned features and pass them into the
+ * FeatureTable.highlightIds property to select the rows in the table and highlight the features
+ * returned from the query. The app has a custom action that allows users to export the selected
+ * records.
+ */
 require([
   "esri/Map",
   "esri/layers/CSVLayer",
@@ -254,6 +264,7 @@ require([
   document.querySelector("calcite-shell").hidden = false;
   document.querySelector("calcite-loader").active = false;
 
+  // CIMSymbol for the UFO symbol
   function getPointSymbolData() {
     return {
       "type": "CIMPointSymbol",
