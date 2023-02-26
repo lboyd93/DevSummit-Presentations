@@ -184,7 +184,7 @@ require([
 				Site access restriction: {CAMP_RESTRICTION}.`;
 		} else {
 			textContent.text =
-				`{TRAILNAME} is a <b>{MTFCC}</b> trail type. Trail is is currently <span style='color: ` +
+				`{TRAILNAME} is a <b>{MTFCC}</b> and currently <span style='color: ` +
 				color +
 				`;'>{ACCESS}</span>. <br> Near {WATERSHED} and <span style='color: ` +
 				color +
