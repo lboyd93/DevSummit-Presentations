@@ -61,13 +61,13 @@ require([
 		];
 
 		const textContent = new TextContent({
-			text: "Created by {FIELD_5} in {FIELD_16}.",
+			text: "Created by {Artist} in {Year_installed}.",
 		});
 
 		const layerSearchSource = {
 			layer: layer,
-			searchFields: ["FIELD_6"],
-			displayField: "FIELD_6",
+			searchFields: ["Title"],
+			displayField: "Title",
 			exactMatch: false,
 			outFields: ["*"],
 			name: "Art piece",
@@ -94,7 +94,7 @@ require([
 		//layer.popupTemplate.content.unshift(textContent);
 		layer.popupTemplate.content.forEach((content) => {
 			if (content.type === "media") {
-				content.mediaInfos[0].title = "Artist: {FIELD_5} circa {FIELD_16}";
+				content.mediaInfos[0].title = "Artist: {Artist} circa {Year_installed}";
 			}
 		});
 		layer.popupTemplate.content.unshift(searchContent);
@@ -116,8 +116,8 @@ require([
 		view.map.add(routeLayer);
 		const layerSearchSource = {
 			layer: featureLayer,
-			searchFields: ["FIELD_6"],
-			displayField: "FIELD_6",
+			searchFields: ["Title"],
+			displayField: "Title",
 			exactMatch: false,
 			outFields: ["*"],
 			name: "Art piece",
@@ -147,11 +147,11 @@ require([
 	view.popup.viewModel.on("trigger-action", (event) => {
 		const selectedFeature = view.popup.viewModel.selectedFeature;
 		if (event.action.id === "open-site") {
-			// Get the 'FIELD_22' field attribute
-			const info = selectedFeature.attributes.FIELD_22;
-			// Make sure the 'FIELD_22' field value is not null
+			// Get the 'Information' field attribute
+			const info = selectedFeature.attributes.Information;
+			// Make sure the 'Information' field value is not null
 			if (info) {
-				// Open up a new browser using the URL value in the 'FIELD_22' field
+				// Open up a new browser using the URL value in the 'Information' field
 				window.open(info.trim());
 			}
 		} else if (event.action.id === "directions") {
@@ -159,7 +159,7 @@ require([
 			directionsWidget.layer = routeLayer;
 			view.map.add(routeLayer);
 			const start = new Stop({
-				name: selectedFeature.attributes.FIELD_6,
+				name: selectedFeature.attributes.Title,
 				geometry: selectedFeature.geometry,
 			});
 			const end = new Stop();
