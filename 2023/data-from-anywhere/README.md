@@ -1,6 +1,6 @@
 # Presentation Resources
 
-PDF of Slides: https://github.com/banuelosj/DevSummit-presentation/blob/main/2022/csv-geojson-ogc/DataFromAnywhere-Slides.pdf
+PDF of Slides: https://github.com/lboyd93/DevSummit-presentation/blob/main/2023/data-from-anywhere/DataFromAnywhere-Slides.pdf
 
 Final Live Demo Links:
 - GeoJSON Demo: https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/geojson-layer/final/

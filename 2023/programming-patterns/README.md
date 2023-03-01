@@ -1,6 +1,6 @@
 # Presentation Resources
 
-PDF of Slides: https://github.com/lboyd93/DevSummit-Presentations/blob/main/2022/programming-patterns/Programming-Patterns-Fundamentals-Slides.pdf
+PDF of Slides: https://github.com/lboyd93/DevSummit-Presentations/blob/main/2023/programming-patterns/ProgrammingPatterns-Slides.pdf
 
 ## Live Links
 
