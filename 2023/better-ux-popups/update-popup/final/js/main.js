@@ -8,7 +8,6 @@ require([
 	"esri/layers/RouteLayer",
 	"esri/rest/support/Stop",
 	"esri/core/reactiveUtils",
-	"esri/popup/content/TextContent",
 ], (
 	WebMap,
 	MapView,
@@ -18,11 +17,12 @@ require([
 	Expand,
 	RouteLayer,
 	Stop,
-	reactiveUtils,
-	TextContent
+	reactiveUtils
 ) => {
 	let directionsWidget;
 	let directionsExpand;
+
+	// Get the webmap via ID and add it to the View.
 	const webmap = new WebMap({
 		portalItem: {
 			// autocasts as new PortalItem()
@@ -33,7 +33,8 @@ require([
 		container: "viewDiv",
 		map: webmap,
 		popup: {
-			// Dock the popup
+			// Dock the popup and set the breakpoint to
+			// false so it always docks.
 			dockEnabled: true,
 			dockOptions: {
 				breakpoint: false,
@@ -44,28 +45,22 @@ require([
 	// Add the Legend widget
 	view.ui.add(new Legend({ view }), "bottom-left");
 
+	// Get the layer to update when the webmap loads.
 	webmap.when(() => {
-		const layer = webmap.layers.at(1);
-		layer.popupTemplate.outFields = ["*"];
-		layer.popupTemplate.actions = [
-			{
-				id: "open-site",
-				className: "esri-icon-public",
-				title: "Website",
-			},
-			{
-				id: "directions",
-				className: "esri-icon-directions2",
-				title: "Get Directions",
-			},
-		];
+		const artLayer = webmap.layers.at(1);
+		artLayer.popupTemplate.outFields = ["*"];
 
-		const textContent = new TextContent({
-			text: "Created by {Artist} in {Year_installed}.",
+		// Check the array of popup template content for a media element
+		// and modify it by adding a title.
+		artLayer.popupTemplate.content.forEach((content) => {
+			if (content.type === "media") {
+				content.mediaInfos[0].title = "Artist: {Artist} circa {Year_installed}";
+			}
 		});
 
+		// Create a layer search source for the Search and Directions widgets.
 		const layerSearchSource = {
-			layer: layer,
+			layer: artLayer,
 			searchFields: ["Title"],
 			displayField: "Title",
 			exactMatch: false,
@@ -74,6 +69,26 @@ require([
 			placeholder: "Search for art piece",
 		};
 
+		// Add the custom Search widget to the popup.
+		addCustomContent(artLayer, layerSearchSource);
+		// Add the custom actions to the popup.
+		addCustomActions(artLayer, layerSearchSource);
+
+		// Watch when the directions widget is collapsed and destroy the
+		// route layer to remove it from the map.
+		reactiveUtils.watch(
+			() => directionsExpand.expanded,
+			(expanded) => {
+				if (!expanded) {
+					directionsWidget.layer.destroy();
+				}
+			}
+		);
+	});
+
+	// Creates a search widget with the art layer as the source
+	// then adds that to a custom content element.
+	function addCustomContent(featureLayer, layerSearchSource) {
 		const search = new Search({
 			view: view,
 			includeDefaultSources: false,
@@ -91,44 +106,38 @@ require([
 			},
 		};
 
-		//layer.popupTemplate.content.unshift(textContent);
-		layer.popupTemplate.content.forEach((content) => {
-			if (content.type === "media") {
-				content.mediaInfos[0].title = "Artist: {Artist} circa {Year_installed}";
-			}
-		});
-		layer.popupTemplate.content.unshift(searchContent);
+		// Add this custom content to the top of the popup.
+		featureLayer.popupTemplate.content.unshift(searchContent);
+	}
 
-		createDirectionsWidget(layer);
+	// Creates two new custom actions and creates the Directions widget
+	function addCustomActions(featureLayer, layerSearchSource) {
+		// Add custom actions to popupTemplate
+		featureLayer.popupTemplate.actions = [
+			{
+				id: "open-site",
+				className: "esri-icon-public",
+				title: "Website",
+			},
+			{
+				id: "directions",
+				className: "esri-icon-directions2",
+				title: "Get Directions",
+			},
+		];
+		createDirectionsWidget(featureLayer, layerSearchSource);
+	}
 
-		reactiveUtils.watch(
-			() => directionsExpand.expanded,
-			(expanded) => {
-				if (!expanded) {
-					directionsWidget.layer.destroy();
-				}
-			}
-		);
-	});
-
-	function createDirectionsWidget(featureLayer) {
+	function createDirectionsWidget(featureLayer, layerSearchSource) {
+		// Create a new Route layer and add it to the map
 		let routeLayer = new RouteLayer();
 		view.map.add(routeLayer);
-		const layerSearchSource = {
-			layer: featureLayer,
-			searchFields: ["Title"],
-			displayField: "Title",
-			exactMatch: false,
-			outFields: ["*"],
-			name: "Art piece",
-			placeholder: "Search for art piece",
-		};
+
 		// new RouteLayer must be added to Directions widget
 		directionsWidget = new Directions({
 			view: view,
 			layer: routeLayer,
-			apiKey:
-				"AAPK091ca90725a849f799efca5816dd1035FaUAxHYP7hILxdNFvAzwy4PNCbuKvCqUubORoL0Lu7jTMTjswyxNty4etjYjBfLJ",
+			//apiKey: "ADD API KEY HERE",
 			searchProperties: {
 				includeDefaultSources: false,
 				searchAllEnabled: false,
@@ -136,6 +145,7 @@ require([
 			},
 		});
 
+		// Add the Directions widget to Expand and add to the view.
 		directionsExpand = new Expand({
 			view: view,
 			content: directionsWidget,
@@ -143,7 +153,7 @@ require([
 		view.ui.add(directionsExpand, "top-right");
 	}
 
-	// When the action button is triggered, open the website in a new page.
+	// When one of the action buttons are triggered, open the website or Directions widget.
 	view.popup.viewModel.on("trigger-action", (event) => {
 		const selectedFeature = view.popup.viewModel.selectedFeature;
 		if (event.action.id === "open-site") {
@@ -155,15 +165,18 @@ require([
 				window.open(info.trim());
 			}
 		} else if (event.action.id === "directions") {
+			// Create a new RouteLayer for the Directions widget and add it to the map.
 			routeLayer = new RouteLayer();
 			directionsWidget.layer = routeLayer;
 			view.map.add(routeLayer);
+			// Add a stop with the current selected feature and a blank stop.
 			const start = new Stop({
 				name: selectedFeature.attributes.Title,
 				geometry: selectedFeature.geometry,
 			});
 			const end = new Stop();
 			directionsWidget.layer.stops = [start, end];
+			// Close the popup and open the directions widget
 			view.popup.close();
 			directionsExpand.expanded = true;
 		}
