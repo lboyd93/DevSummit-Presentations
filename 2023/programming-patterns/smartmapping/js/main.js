@@ -3,23 +3,15 @@ require([
 	"esri/views/MapView",
 	"esri/layers/FeatureLayer",
 	"esri/smartMapping/renderers/predominance",
-	"esri/smartMapping/renderers/dotDensity",
-	"esri/smartMapping/symbology/dotDensity",
 	"esri/smartMapping/renderers/pieChart",
 	"esri/widgets/Legend",
-	"esri/Color",
-	"esri/smartMapping/popup/templates",
 ], (
 	Map,
 	MapView,
 	FeatureLayer,
 	predominanceRendererCreator,
-	dotDensityRendererCreator,
-	dotDensitySchemes,
 	pieChartRendererCreator,
-	Legend,
-	Color,
-	popupTemplateCreator
+	Legend
 ) => {
 	const cropsURL =
 		"https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/USA_County_Crops_2007/FeatureServer/0";
