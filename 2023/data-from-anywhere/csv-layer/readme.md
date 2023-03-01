@@ -1,9 +1,11 @@
 # Demo Live Links:
 
-Step 1: [Adding CSVLayer](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/csv-layer/step1_layer/)
+Step 1: [Adding CSVLayer](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/csv-layer/step1-load-data/)
 
-Step 2: [Adding Renderer](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/csv-layer/step2_renderer) 
+Step 2: [Adding Renderer](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/csv-layer/step2-renderer-popup) 
 
-Step 3: [Adding PopupTemplate](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/csv-layer/step3_popup/)
+Step 3: [Adding PopupTemplate](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/csv-layer/step3-widgets/)
 
-Step 4: [Adding TimeSlider](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/csv-layer/step4_timeslider_final/)
+Step 4: [Adding Clustering](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/csv-layer/step4-clustering)
+
+Step 5: [Add Table](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/csv-layer/step5-final-with-table)
