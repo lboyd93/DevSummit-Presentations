@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Layer View</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <script type="module">
+      import * as reactiveUtils from "https://js.arcgis.com/4.26/@arcgis/core/core/reactiveUtils.js";
+      import FeatureLayer from "https://js.arcgis.com/4.26/@arcgis/core/layers/FeatureLayer.js";
+      import Map from "https://js.arcgis.com/4.26/@arcgis/core/Map.js";
+      import MapView from "https://js.arcgis.com/4.26/@arcgis/core/views/MapView.js";
+      import Expand from "https://js.arcgis.com/4.26/@arcgis/core/widgets/Expand.js";
+      import LayerList from "https://js.arcgis.com/4.26/@arcgis/core/widgets/LayerList.js";
+
+      const wellsLayer = new FeatureLayer({
+        title: "Wells",
+        url: "https://services2.arcgis.com/ZOdjAzAQ2B0f85zi/ArcGIS/rest/services/Oil_and_Gas_Wells/FeatureServer/0",
+        visible: true
+      });
+
+      const map = new Map({
+        basemap: "streets-navigation-vector",
+        layers: [wellsLayer]
+      });
+
+      const view = new MapView({
+        map,
+        center: {
+          latitude: 38.3,
+          longitude: -99
+        },
+        container: "viewDiv",
+        zoom: 7
+      });
+
+      /**
+       * Function to invoke queryLayerViewCounts() when the view becomes stationary
+       * and add a LayerList widget with a legend embedded
+       */
+      const setup = async () => {
+        reactiveUtils.watch(
+          () => [view.stationary, view.extent],
+          ([stationary, extent]) => {
+            if (stationary) {
+              queryLayerViewCounts(extent);
+            }
+          }
+        );
+
+        const layerList = new LayerList({
+          view: view,
+          listItemCreatedFunction: (event) => {
+            const item = event.item;
+            if (item.layer.type != "group") {
+              // don't show legend twice
+              item.panel = {
+                content: "legend",
+                open: true
+              };
+            }
+          }
+        });
+
+        const expand = new Expand({
+          content: layerList,
+          expandTooltip: "Layer List",
+          view
+        });
+
+        view.ui.add(expand, "top-right");
+      };
+
+      /**
+       * Function to query initial feature counts on the layers and update the html
+       */
+      const queryLayerCounts = async () => {
+        // query the number of features in the new york footprints layer update the html
+        const wellsLayerCount = await wellsLayer.queryFeatureCount();
+        document.getElementById("wellsLayerCount").innerText = wellsLayerCount;
+      };
+
+      /**
+       * Function that queries counts for layers and layer views
+       */
+      const queryLayerViewCounts = async (extent) => {
+        // wait for the  layer views to be loaded in the view
+        const wellsLayerView = await view.whenLayerView(wellsLayer);
+
+        // wait for the layer view to stop updating
+        await reactiveUtils.whenOnce(() => wellsLayerView.updating === false);
+
+        // query the number of features in the oil and gas wells layer view and update the html
+        const wellsLayerViewCount = await wellsLayerView.queryFeatureCount();
+        document.getElementById("wellsLayerViewCount").innerText = wellsLayerViewCount;
+
+        // query the number of features in the oil and gas wells layer view in the view extent and update the html
+        const wellsExtentQuery = wellsLayerView.createQuery();
+        wellsExtentQuery.geometry = extent;
+        const wLayerViewExtentCount = await wellsLayerView.queryFeatureCount(wellsExtentQuery);
+        document.getElementById("wellsLayerViewExtentCount").innerText = wLayerViewExtentCount;
+      };
+
+      view.when(() => {
+        setup();
+        queryLayerCounts();
+        queryLayerViewCounts();
+      });
+    </script>
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-shell-panel slot="panel-start" position="start">
+        <calcite-tabs>
+          <calcite-tab-nav slot="title-group">
+            <calcite-tab-title selected tab="wells">Wells</calcite-tab-title>
+          </calcite-tab-nav>
+          <calcite-tab tab="wells">
+            <calcite-tile
+              heading="Number of oil and gas wells in the Layer"
+              description="server-side"
+            >
+              <calcite-chip slot="content-end" id="wellsLayerCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of oil and gas wells in the LayerView"
+              description="client-side"
+            >
+              <calcite-chip slot="content-end" id="wellsLayerViewCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of oil and gas wells in the view's extent"
+              description="client-side, spatial"
+            >
+              <calcite-chip slot="content-end" id="wellsLayerViewExtentCount"></calcite-chip>
+            </calcite-tile>
+          </calcite-tab>
+        </calcite-tabs>
+      </calcite-shell-panel>
+      <div id="viewDiv"></div>
+    </calcite-shell>
+  </body>
+</html>
