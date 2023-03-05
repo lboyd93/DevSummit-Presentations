@@ -12,6 +12,7 @@
         <calcite-tabs>
           <calcite-tab-nav slot="title-group">
             <calcite-tab-title selected tab="wells">Wells</calcite-tab-title>
+            <calcite-tab-title tab="earthquakes">Earthquakes</calcite-tab-title>
             <calcite-tab-title tab="stations">Stations</calcite-tab-title>
             <calcite-tab-title tab="watches">Watches</calcite-tab-title>
           </calcite-tab-nav>
@@ -35,6 +36,26 @@
               description="client-side, spatial"
             >
               <calcite-chip slot="content-end" id="wellsLayerViewExtentCount"></calcite-chip>
+            </calcite-tile>
+          </calcite-tab>
+
+          <calcite-tab tab="earthquakes">
+            <calcite-tile heading="Number of earthquakes in the Layer" description="server-side">
+              <calcite-chip slot="content-end" id="earthquakesLayerCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of earthquakes in the LayerView"
+              description="client-side"
+            >
+              <calcite-chip slot="content-end" id="earthquakesLayerViewCount"></calcite-chip>
+            </calcite-tile>
+
+            <calcite-tile
+              heading="Number of earthquakes in the view's extent"
+              description="client-side, spatial"
+            >
+              <calcite-chip slot="content-end" id="earthquakesLayerViewExtentCount"></calcite-chip>
             </calcite-tile>
           </calcite-tab>
 

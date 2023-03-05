@@ -2,6 +2,7 @@ import "@arcgis/core/assets/esri/themes/light/main.css";
 import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
 import Graphic from "@arcgis/core/Graphic.js";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
+import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer.js";
 import Map from "@arcgis/core/Map.js";
 import MapView from "@arcgis/core/views/MapView.js";
 import Expand from "@arcgis/core/widgets/Expand.js";
@@ -63,6 +64,11 @@ const clickGraphic = new Graphic({
   }
 });
 
+const earthquakesLayer = new GeoJSONLayer({
+  url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",
+  visible: false
+});
+
 const stationsLayer = new FeatureLayer({
   labelingInfo: [...skyConditionLabelClasses, ...temperatureLabelClasses, windLabelClass],
   outFields: ["OBJECTID", "COUNTRY", "TEMP", "WIND_DIRECT", "WIND_SPEED"],
@@ -88,7 +94,7 @@ const wellsLayer = new FeatureLayer({
 
 const map = new Map({
   basemap: "streets-navigation-vector",
-  layers: [watchesLayer, wellsLayer, stationsLayer]
+  layers: [watchesLayer, wellsLayer, stationsLayer, earthquakesLayer]
 });
 
 const view = new MapView({
@@ -108,7 +114,22 @@ const view = new MapView({
 document.querySelectorAll("calcite-tab-title").forEach((element) => {
   element.addEventListener("calciteTabsActivate", (event) => {
     switch (event.target.tab) {
+      case "earthquakes":
+        earthquakesLayer.visible = true;
+        stationsLayer.visible = false;
+        watchesLayer.visible = false;
+        wellsLayer.visible = false;
+
+        // remove a click event event handler on view
+        // if it exists
+        if (mapViewClickHandle) {
+          mapViewClickHandle.remove();
+          mapViewClickHandle = null;
+        }
+        break;
+
       case "stations":
+        earthquakesLayer.visible = false;
         stationsLayer.visible = true;
         watchesLayer.visible = false;
         wellsLayer.visible = false;
@@ -124,6 +145,7 @@ document.querySelectorAll("calcite-tab-title").forEach((element) => {
         break;
 
       case "watches":
+        earthquakesLayer.visible = false;
         stationsLayer.visible = false;
         watchesLayer.visible = true;
         wellsLayer.visible = false;
@@ -139,6 +161,7 @@ document.querySelectorAll("calcite-tab-title").forEach((element) => {
         break;
 
       default:
+        earthquakesLayer.visible = false;
         stationsLayer.visible = false;
         watchesLayer.visible = false;
         wellsLayer.visible = true;
@@ -197,6 +220,10 @@ const setup = async () => {
  * Function to query initial feature counts on the layers and update the html
  */
 const queryLayerCounts = async () => {
+  // query the number of features in the earthquakes layer update and the html
+  const earthquakeLayerCount = await earthquakesLayer.queryFeatureCount();
+  document.getElementById("earthquakesLayerCount").innerText = earthquakeLayerCount;
+
   // query the number of features in the weather stations layer update and the html
   const stationsLayerCount = await stationsLayer.queryFeatureCount();
   document.getElementById("stationsLayerCount").innerText = stationsLayerCount;
@@ -215,55 +242,64 @@ const queryLayerCounts = async () => {
  */
 const queryLayerViewCounts = async (extent) => {
   // wait for the  layer views to be loaded in the view
+  const earthquakesLayerView = await view.whenLayerView(earthquakesLayer);
   const stationsLayerView = await view.whenLayerView(stationsLayer);
   const watchesLayerView = await view.whenLayerView(watchesLayer);
   const wellsLayerView = await view.whenLayerView(wellsLayer);
 
   // wait for the layer views to stop updating
-  reactiveUtils
-    .whenOnce(
-      () =>
-        stationsLayerView.updating === false &&
-        watchesLayerView.updating === false &&
-        wellsLayerView.updating === false
-    )
-    .then(async () => {
-      // query the number of features in the weather stations layer view and update the html
-      const stationsLayerViewCount = await stationsLayerView.queryFeatureCount();
-      document.getElementById("stationsLayerViewCount").innerText = stationsLayerViewCount;
+  await reactiveUtils.whenOnce(
+    () =>
+      earthquakesLayerView.updating === false &&
+      stationsLayerView.updating === false &&
+      watchesLayerView.updating === false &&
+      wellsLayerView.updating === false
+  );
 
-      // query the number of features in the weather stations layer view in the view extent and update the html
-      const stationsExtentQuery = stationsLayerView.createQuery();
-      stationsExtentQuery.geometry = extent;
-      const stationsLayerViewExtentCount = await stationsLayerView.queryFeatureCount(
-        stationsExtentQuery
-      );
-      document.getElementById("stationsLayerViewExtentCount").innerText =
-        stationsLayerViewExtentCount;
+  // query the number of features in the earthquakes layer view and update the html
+  const earthquakesLayerViewCount = await earthquakesLayerView.queryFeatureCount();
+  document.getElementById("earthquakesLayerViewCount").innerText = earthquakesLayerViewCount;
 
-      // query the number of features in the weather watches and warnings layer view and update the html
-      const watchesLayerViewCount = await watchesLayerView.queryFeatureCount();
-      document.getElementById("watchesLayerViewCount").innerText = watchesLayerViewCount;
+  // query the number of features in the earthquakes layer view in the view extent and update the html
+  const earthquakesExtentQuery = earthquakesLayerView.createQuery();
+  earthquakesExtentQuery.geometry = extent;
+  const earthquakesLayerViewExtentCount = await earthquakesLayerView.queryFeatureCount(
+    earthquakesExtentQuery
+  );
+  document.getElementById("earthquakesLayerViewExtentCount").innerText =
+    earthquakesLayerViewExtentCount;
 
-      // query the number of features in the weather watches and warnings layer view in the view extent and update the html
-      const watchesExtentQuery = watchesLayerView.createQuery();
-      watchesExtentQuery.geometry = extent;
-      const watchesLayerViewExtentCount = await watchesLayerView.queryFeatureCount(
-        watchesExtentQuery
-      );
-      document.getElementById("watchesLayerViewExtentCount").innerText =
-        watchesLayerViewExtentCount;
+  // query the number of features in the weather stations layer view and update the html
+  const stationsLayerViewCount = await stationsLayerView.queryFeatureCount();
+  document.getElementById("stationsLayerViewCount").innerText = stationsLayerViewCount;
 
-      // query the number of features in the oil and gas wells layer view and update the html
-      const wellsLayerViewCount = await wellsLayerView.queryFeatureCount();
-      document.getElementById("wellsLayerViewCount").innerText = wellsLayerViewCount;
+  // query the number of features in the weather stations layer view in the view extent and update the html
+  const stationsExtentQuery = stationsLayerView.createQuery();
+  stationsExtentQuery.geometry = extent;
+  const stationsLayerViewExtentCount = await stationsLayerView.queryFeatureCount(
+    stationsExtentQuery
+  );
+  document.getElementById("stationsLayerViewExtentCount").innerText = stationsLayerViewExtentCount;
 
-      // query the number of features in the oil and gas wells layer view in the view extent and update the html
-      const wellsExtentQuery = wellsLayerView.createQuery();
-      wellsExtentQuery.geometry = extent;
-      const wLayerViewExtentCount = await wellsLayerView.queryFeatureCount(wellsExtentQuery);
-      document.getElementById("wellsLayerViewExtentCount").innerText = wLayerViewExtentCount;
-    });
+  // query the number of features in the weather watches and warnings layer view and update the html
+  const watchesLayerViewCount = await watchesLayerView.queryFeatureCount();
+  document.getElementById("watchesLayerViewCount").innerText = watchesLayerViewCount;
+
+  // query the number of features in the weather watches and warnings layer view in the view extent and update the html
+  const watchesExtentQuery = watchesLayerView.createQuery();
+  watchesExtentQuery.geometry = extent;
+  const watchesLayerViewExtentCount = await watchesLayerView.queryFeatureCount(watchesExtentQuery);
+  document.getElementById("watchesLayerViewExtentCount").innerText = watchesLayerViewExtentCount;
+
+  // query the number of features in the oil and gas wells layer view and update the html
+  const wellsLayerViewCount = await wellsLayerView.queryFeatureCount();
+  document.getElementById("wellsLayerViewCount").innerText = wellsLayerViewCount;
+
+  // query the number of features in the oil and gas wells layer view in the view extent and update the html
+  const wellsExtentQuery = wellsLayerView.createQuery();
+  wellsExtentQuery.geometry = extent;
+  const wLayerViewExtentCount = await wellsLayerView.queryFeatureCount(wellsExtentQuery);
+  document.getElementById("wellsLayerViewExtentCount").innerText = wLayerViewExtentCount;
 };
 
 /**
