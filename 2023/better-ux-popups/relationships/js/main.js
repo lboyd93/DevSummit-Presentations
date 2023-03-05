@@ -155,7 +155,7 @@ require([
 			],
 		},
 		popupTemplate: {
-			title: "{FIRE_NAME} Fire",
+			title: "{expression/fire-name} Fire",
 			outfields: ["*"],
 			fieldInfos: [
 				{
@@ -189,6 +189,11 @@ require([
 					title: "Duration of burn in days",
 					expression:
 						"Round(DateDiff($feature.CONT_DATE, $feature.ALARM_DATE, 'days'))",
+				},
+				{
+					name: "fire-name",
+					title: "Fire name",
+					expression: "Proper('$feature.FIRE_NAME', 'firstword')",
 				},
 			],
 			content: [

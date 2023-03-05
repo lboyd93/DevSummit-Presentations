@@ -129,31 +129,6 @@ require([
 		createDirectionsWidget(featureLayer, layerSearchSource);
 	}
 
-	function createDirectionsWidget(featureLayer, layerSearchSource) {
-		// Create a new Route layer and add it to the map
-		let routeLayer = new RouteLayer();
-		view.map.add(routeLayer);
-
-		// new RouteLayer must be added to Directions widget
-		directionsWidget = new Directions({
-			view: view,
-			layer: routeLayer,
-			//apiKey: "ADD API KEY HERE",
-			searchProperties: {
-				includeDefaultSources: false,
-				searchAllEnabled: false,
-				sources: [layerSearchSource],
-			},
-		});
-
-		// Add the Directions widget to Expand and add to the view.
-		directionsExpand = new Expand({
-			view: view,
-			content: directionsWidget,
-		});
-		view.ui.add(directionsExpand, "top-right");
-	}
-
 	// When one of the action buttons are triggered, open the website or Directions widget.
 	view.popup.viewModel.on("trigger-action", (event) => {
 		const selectedFeature = view.popup.viewModel.selectedFeature;
@@ -182,4 +157,29 @@ require([
 			directionsExpand.expanded = true;
 		}
 	});
+
+	function createDirectionsWidget(featureLayer, layerSearchSource) {
+		// Create a new Route layer and add it to the map
+		let routeLayer = new RouteLayer();
+		view.map.add(routeLayer);
+
+		// new RouteLayer must be added to Directions widget
+		directionsWidget = new Directions({
+			view: view,
+			layer: routeLayer,
+			//apiKey: "ADD API KEY HERE",
+			searchProperties: {
+				includeDefaultSources: false,
+				searchAllEnabled: false,
+				sources: [layerSearchSource],
+			},
+		});
+
+		// Add the Directions widget to Expand and add to the view.
+		directionsExpand = new Expand({
+			view: view,
+			content: directionsWidget,
+		});
+		view.ui.add(directionsExpand, "top-right");
+	}
 });

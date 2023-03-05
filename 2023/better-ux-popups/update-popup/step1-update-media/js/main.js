@@ -12,6 +12,15 @@ require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Legend"], (
 	const view = new MapView({
 		container: "viewDiv",
 		map: webmap,
+		popup: {
+			// Dock the popup and set the breakpoint to
+			// false so it always docks.
+			dockEnabled: true,
+			dockOptions: {
+				breakpoint: false,
+				position: "bottom-right",
+			},
+		},
 	});
 	// Add the Legend widget
 	view.ui.add(new Legend({ view }), "bottom-left");
@@ -22,7 +31,8 @@ require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Legend"], (
 
 		artLayer.popupTemplate.content.forEach((content) => {
 			if (content.type === "media") {
-				content.mediaInfos[0].title = "Artist: {Artist} circa {Year_installed}";
+				content.mediaInfos[0].caption =
+					"Artist: {Artist} circa {Year_installed}";
 			}
 		});
 	});

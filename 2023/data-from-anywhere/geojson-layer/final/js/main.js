@@ -227,6 +227,7 @@ require([
 		ground: "world-elevation",
 		layers: [boundaryLayer, trailsLayer, backCountryLayer],
 	});
+
 	const view = new SceneView({
 		container: "viewDiv",
 		map: map,
