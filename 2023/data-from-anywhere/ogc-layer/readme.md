@@ -1,9 +1,9 @@
 # Demo Live Links:
 
-Step 1: [Adding WFSLayer](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/ogc-layer/step1_layer/)
+Step 1: [Adding WFS Layer](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/ogc-layer/step1-add-layer/)
 
-Step 2: [Adding Smartmapping Renderer](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/ogc-layer/step2_renderer/) 
+Step 2: [Adding Smartmapping Renderer](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/ogc-layer/step2-renderer) 
 
-Step 3: [Adding PopupTemplate](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/ogc-layer/step3_popup/)
+Step 3: [Adding TimeSlider](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/ogc-layer/step3-timeslider)
 
-Step 4: [Adding Feature Effect](https://banuelosj.github.io/DevSummit-presentation/2022/csv-geojson-ogc/ogc-layer/step4_feature_effect_final/)
+Step 4: [Adding Popups](https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/ogc-layer/step4-popup)

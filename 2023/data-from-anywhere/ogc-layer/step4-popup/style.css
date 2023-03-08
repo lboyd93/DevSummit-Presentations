@@ -1,0 +1,18 @@
+html,
+body,
+#viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#timeSlider {
+    position: fixed;
+    left: 5%;
+    right: 5%;
+}
+
+.esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel {
+    max-height: 100% !important;
+}
