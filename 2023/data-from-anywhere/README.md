@@ -6,3 +6,5 @@ Final Live Demo Links:
 - GeoJSON Demo: https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/geojson-layer/final/
 - WFSLayer Demo: https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/ogc-layer/final/
 - CSVLayer Demo: https://lboyd93.github.io/DevSummit-Presentations/2023/data-from-anywhere/csv-layer/step5-final-with-table
+
+CIMSymbol Builder Blog: https://www.esri.com/arcgis-blog/products/js-api-arcgis/developers/cim-symbol-builder/
