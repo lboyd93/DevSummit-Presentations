@@ -130,33 +130,37 @@ require([
 	}
 
 	// When one of the action buttons are triggered, open the website or Directions widget.
-	view.popup.viewModel.on("trigger-action", (event) => {
-		const selectedFeature = view.popup.viewModel.selectedFeature;
-		if (event.action.id === "open-site") {
-			// Get the 'Information' field attribute
-			const info = selectedFeature.attributes.Information;
-			// Make sure the 'Information' field value is not null
-			if (info) {
-				// Open up a new browser using the URL value in the 'Information' field
-				window.open(info.trim());
+	reactiveUtils.on(
+		() => view.popup?.viewModel,
+		"trigger-action",
+		(event) => {
+			const selectedFeature = view.popup.viewModel.selectedFeature;
+			if (event.action.id === "open-site") {
+				// Get the 'Information' field attribute
+				const info = selectedFeature.attributes.Information;
+				// Make sure the 'Information' field value is not null
+				if (info) {
+					// Open up a new browser using the URL value in the 'Information' field
+					window.open(info.trim());
+				}
+			} else if (event.action.id === "directions") {
+				// Create a new RouteLayer for the Directions widget and add it to the map.
+				routeLayer = new RouteLayer();
+				directionsWidget.layer = routeLayer;
+				view.map.add(routeLayer);
+				// Add a stop with the current selected feature and a blank stop.
+				const start = new Stop({
+					name: selectedFeature.attributes.Title,
+					geometry: selectedFeature.geometry,
+				});
+				const end = new Stop();
+				directionsWidget.layer.stops = [start, end];
+				// Close the popup and open the directions widget
+				view.closePopup();
+				directionsExpand.expanded = true;
 			}
-		} else if (event.action.id === "directions") {
-			// Create a new RouteLayer for the Directions widget and add it to the map.
-			routeLayer = new RouteLayer();
-			directionsWidget.layer = routeLayer;
-			view.map.add(routeLayer);
-			// Add a stop with the current selected feature and a blank stop.
-			const start = new Stop({
-				name: selectedFeature.attributes.Title,
-				geometry: selectedFeature.geometry,
-			});
-			const end = new Stop();
-			directionsWidget.layer.stops = [start, end];
-			// Close the popup and open the directions widget
-			view.popup.close();
-			directionsExpand.expanded = true;
 		}
-	});
+	);
 
 	function createDirectionsWidget(featureLayer, layerSearchSource) {
 		// Create a new Route layer and add it to the map
