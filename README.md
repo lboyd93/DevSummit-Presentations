@@ -6,7 +6,7 @@ This repository contains all the resources used for Esri Developer Summit presen
 ### ArcGIS Maps SDK for JavaScript: Better UX with Popups
 _CoAuthored with Lauren Ballantyne_
 
-![Better UX Popups Title Slide](/4/images/BetterUXPopups.png)
+![Better UX Popups Title Slide](/2024/images/BetterUXPopups.png)
 
 In this session, you’ll learn how to utilize recently added features in the Map Viewer and the ArcGIS Maps SDK for JavaScript that allow you to modify the popup’s appearance and behavior. We’ll cover how to configure different elements within the pop-up, work with Arcade, display charts, and more to modify the look and feel the of the popup to meet your application’s requirements.
 
