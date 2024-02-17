@@ -1,8 +1,5 @@
 require(["esri/smartMapping/popup/templates"], (popupTemplateCreator) => {
 	const control = document.getElementById("control");
-	const primary = document.getElementById("primary-control");
-	const secondary = document.getElementById("secondary-control");
-	const chart = document.getElementById("chart-control");
 	// Get a reference to the arcgis-layer-list component
 	const arcgisMap = document.querySelector("arcgis-map");
 	arcgisMap.addEventListener("viewReady", (event) => {
