@@ -7,6 +7,10 @@ require(["esri/smartMapping/popup/templates"], (popupTemplateCreator) => {
 	const arcgisMap = document.querySelector("arcgis-map");
 	arcgisMap.addEventListener("viewReady", (event) => {
 		const view = event.target.view;
+		view.constraints = {
+			minScale: 2000000,
+			maxScale: 0,
+		};
 		view.popup.dockEnabled = true;
 		view.popup.dockOptions = {
 			breakpoint: false,
@@ -19,11 +23,6 @@ require(["esri/smartMapping/popup/templates"], (popupTemplateCreator) => {
 				layer: layer,
 			})
 			.then((response) => {
-				// let chartTemplate = response.secondaryTemplates.find(
-				// 	(template) => template.name === "predominant-category-chart"
-				// );
-				// layer.popupTemplate = chartTemplate.value;
-				console.log(response);
 				control.addEventListener("calciteSegmentedControlChange", (event) => {
 					const selectedValue = event.target.value;
 					if (selectedValue === "Primary") {
