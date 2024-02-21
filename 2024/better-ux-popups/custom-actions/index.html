@@ -50,7 +50,7 @@
 					icon="popup"
 					alt="Application logo"
 					slot="logo"
-					heading="Create popup template via Smart Mapping"
+					heading="Custom actions & VisibleElements"
 					description="Esri Developer Summit 2024"
 				></calcite-navigation-logo>
 				<calcite-action-pad
@@ -106,32 +106,48 @@
 					<calcite-notice open scale="s" slot="footer">
 						<span slot="title">What is being demonstrated?</span>
 						<span slot="message">
-							This demonstration application showcases how to generate popup
-							templates using the smart mapping popupTemplateCreator.
+							This demonstration application showcases how to change the visible
+							elements and how to create a custom action for a popup.
 						</span>
 					</calcite-notice>
 
 					<calcite-block
 						collapsible
-						heading="Generated popup templates"
-						description="Update the layer's popup template with pre-generated ones"
+						heading="Popup Visible Elements"
+						description="Configure the VisibleElements on the view's popup."
 						open
 					>
-						<calcite-icon scale="s" slot="icon" icon="effects"></calcite-icon>
-						<body></body>
-						<calcite-label>
-							Template type
-							<calcite-segmented-control id="control" width="full">
-								<calcite-segmented-control-item
-									value="Primary"
-								></calcite-segmented-control-item>
-								<calcite-segmented-control-item
-									value="Text"
-								></calcite-segmented-control-item>
-								<calcite-segmented-control-item
-									value="Chart"
-								></calcite-segmented-control-item>
-							</calcite-segmented-control>
+						<calcite-icon
+							scale="s"
+							slot="icon"
+							icon="configure-popup"
+						></calcite-icon>
+						<calcite-label layout="inline">
+							<calcite-checkbox id="action-bar" checked></calcite-checkbox>
+							actionBar
+						</calcite-label>
+						<calcite-label layout="inline">
+							<calcite-checkbox id="close-button" checked></calcite-checkbox>
+							closeButton
+						</calcite-label>
+						<calcite-label layout="inline">
+							<calcite-checkbox id="collapse-button" checked></calcite-checkbox>
+							collapseButton
+						</calcite-label>
+						<calcite-label layout="inline">
+							<calcite-checkbox
+								id="feature-navigation"
+								checked
+							></calcite-checkbox>
+							featureNavigation
+						</calcite-label>
+						<calcite-label layout="inline">
+							<calcite-checkbox id="heading" checked></calcite-checkbox>
+							heading
+						</calcite-label>
+						<calcite-label layout="inline">
+							<calcite-checkbox id="spinner" checked></calcite-checkbox>
+							spinner
 						</calcite-label>
 					</calcite-block>
 				</calcite-panel>
