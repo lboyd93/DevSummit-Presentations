@@ -2,7 +2,7 @@ require(["esri/smartMapping/popup/templates"], (popupTemplateCreator) => {
 	const control = document.getElementById("control");
 	// Get a reference to the arcgis-layer-list component
 	const arcgisMap = document.querySelector("arcgis-map");
-	arcgisMap.addEventListener("viewReady", (event) => {
+	arcgisMap.addEventListener("arcgisViewReadyChange", (event) => {
 		const view = event.target.view;
 		view.constraints = {
 			minScale: 2000000,
