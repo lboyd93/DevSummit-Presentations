@@ -19,21 +19,21 @@
 		/>
 
 		<!-- ArcGIS Maps SDK for JavaScript imports -->
-		<script src="https://js.arcgis.com/next/"></script>
+		<script src="https://js.arcgis.com/4.29/"></script>
 		<link
 			id="jsapi-mode-light"
 			rel="stylesheet"
-			href="https://js.arcgis.com/next/esri/themes/light/main.css"
+			href="https://js.arcgis.com/4.29/esri/themes/light/main.css"
 		/>
 		<link
 			disabled
 			id="jsapi-mode-dark"
 			rel="stylesheet"
-			href="https://js.arcgis.com/next/esri/themes/dark/main.css"
+			href="https://js.arcgis.com/4.29/esri/themes/dark/main.css"
 		/>
 		<script
 			type="module"
-			src="https://js.arcgis.com/map-components/next/arcgis-map-components.esm.js"
+			src="https://js.arcgis.com/map-components/4.29/arcgis-map-components.esm.js"
 		></script>
 
 		<!-- Demo imports -->
@@ -115,7 +115,6 @@
 						collapsible
 						heading="Popup Visible Elements"
 						description="Configure the VisibleElements on the view's popup."
-						open
 					>
 						<calcite-icon
 							scale="s"
@@ -123,41 +122,45 @@
 							icon="configure-popup"
 						></calcite-icon>
 						<calcite-label layout="inline">
-							<calcite-checkbox id="action-bar" checked></calcite-checkbox>
+							<calcite-switch id="action-bar" checked></calcite-switch>
 							actionBar
 						</calcite-label>
 						<calcite-label layout="inline">
-							<calcite-checkbox id="close-button" checked></calcite-checkbox>
+							<calcite-switch id="close-button" checked></calcite-switch>
 							closeButton
 						</calcite-label>
 						<calcite-label layout="inline">
-							<calcite-checkbox id="collapse-button" checked></calcite-checkbox>
+							<calcite-switch id="collapse-button" checked></calcite-switch>
 							collapseButton
 						</calcite-label>
 						<calcite-label layout="inline">
-							<calcite-checkbox
-								id="feature-navigation"
-								checked
-							></calcite-checkbox>
+							<calcite-switch id="feature-navigation" checked></calcite-switch>
 							featureNavigation
 						</calcite-label>
 						<calcite-label layout="inline">
-							<calcite-checkbox id="heading" checked></calcite-checkbox>
+							<calcite-switch id="heading" checked></calcite-switch>
 							heading
 						</calcite-label>
 						<calcite-label layout="inline">
-							<calcite-checkbox id="spinner" checked></calcite-checkbox>
+							<calcite-switch id="spinner" checked></calcite-switch>
 							spinner
 						</calcite-label>
 					</calcite-block>
 				</calcite-panel>
 			</calcite-shell-panel>
 
-			<arcgis-map item-id="0a4a5b9b70c9449b9f2e87a6864db2a7"> </arcgis-map>
+			<arcgis-map item-id="6136110b322c4ea38839344243cc5919">
+				<arcgis-expand id="editor-expand" position="top-left">
+					<arcgis-directions />
+				</arcgis-expand>
+				<arcgis-expand id="editor-expand" position="bottom-right">
+					<arcgis-legend map-item-id="6136110b322c4ea38839344243cc5919" />
+				</arcgis-expand>
+			</arcgis-map>
 		</calcite-shell>
 
 		<!-- Demo template interactive elements -->
-		<calcite-alert open icon="effects">
+		<calcite-alert auto-close open icon="effects">
 			<div slot="title">Esri Developer Summit 2024</div>
 			<div slot="message">Welcome to beautiful Palm Springs!</div>
 		</calcite-alert>
