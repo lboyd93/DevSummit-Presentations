@@ -1,6 +1,6 @@
 # Presentation Resources
 
-PDF of Slides: TBD
+PDF of Slides: https://lboyd93.github.io/DevSummit-Presentations/2024/better-ux-popups/better-ux-popups-slides.pdf
 
 ## Webmaps
 - TBD
