@@ -27,8 +27,8 @@ function handleModeChange() {
 	darkModeCss.disabled = !darkModeCss.disabled;
 	lightModeCss.disabled = !lightModeCss.disabled;
 	arcgisMap.itemId = isDarkMode
-		? "94b59fe7d20545dd8323ec12bab9adce"
-		: "0a4a5b9b70c9449b9f2e87a6864db2a7";
+		? "be39dfe7c7e346edadd2a0545a4def9f"
+		: "6136110b322c4ea38839344243cc5919";
 	toggleModeEl.icon = isDarkMode ? "moon" : "brightness";
 	document.body.className = isDarkMode ? "calcite-mode-dark" : undefined;
 	console.log("Light mode", lightModeCss);
