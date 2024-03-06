@@ -149,7 +149,7 @@
 						geometry: selectedFeature.geometry,
 					});
 					const end = new Stop();
-					arcgisDirections.layer.stops = [start, end];
+					arcgisDirections.layer.stops = [end, start];
 					// Close the popup and open the edit widget
 					view.closePopup();
 					arcgisExpand.expanded = true;
@@ -157,20 +157,19 @@
 			}
 		);
 
-		// This doesn't work because this attribute isn't reflected on the DOM
-		// 4.29 update coming so that this works.
+		// Add a MutationObserver on the Expand component's expand property to destroy the
+		// route layer in the Directions component when it's collapsed.
 		const observer = new MutationObserver((mutations, observer) => {
 			for (let mutation of mutations) {
-				// Console.log when item id changes
 				if (
 					mutation.type === "attributes" &&
 					mutation.attributeName === "expanded"
 				) {
-					console.log(
-						`Mutation observer: expanded changed to ${arcgisExpand.getAttribute(
-							"expanded"
-						)}`
-					);
+					if (!arcgisExpand.expanded) {
+						arcgisDirections.layer.destroy();
+					} else {
+						view.closePopup();
+					}
 				}
 			}
 		});
