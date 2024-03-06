@@ -6,12 +6,6 @@
 	const Stop = await $arcgis.import("esri/rest/support/Stop");
 
 	// UI and map components
-	const actionBarCheck = document.getElementById("action-bar");
-	const closeCheck = document.getElementById("close-button");
-	const collapseCheck = document.getElementById("collapse-button");
-	const featureNavCheck = document.getElementById("feature-navigation");
-	const headingCheck = document.getElementById("heading");
-	const spinnerCheck = document.getElementById("spinner");
 	const arcgisMap = document.querySelector("arcgis-map");
 	const arcgisExpand = document.querySelector("arcgis-expand");
 	const arcgisDirections = document.querySelector("arcgis-directions");
@@ -79,51 +73,6 @@
 			],
 		};
 		view.map.add(routeLayer);
-
-		// Function to watch whether the visibleElement switches are checked.
-		const switchChanged = (event) => {
-			const switchValue = event.target.id;
-			switch (switchValue) {
-				case "action-bar":
-					view.popup.visibleElements.actionBar = event.target.checked
-						? true
-						: false;
-					break;
-				case "close-button":
-					view.popup.visibleElements.closeButton = event.target.checked
-						? true
-						: false;
-					break;
-				case "collapse-button":
-					view.popup.visibleElements.collapseButton = event.target.checked
-						? true
-						: false;
-					break;
-				case "feature-navigation":
-					view.popup.visibleElements.featureNavigation = event.target.checked
-						? true
-						: false;
-					break;
-				case "heading":
-					view.popup.visibleElements.heading = event.target.checked
-						? true
-						: false;
-					break;
-				case "spinner":
-					view.popup.visibleElements.spinner = event.target.checked
-						? true
-						: false;
-					break;
-			}
-		};
-
-		// Add event listeners on the switches.
-		actionBarCheck.addEventListener("calciteSwitchChange", switchChanged);
-		closeCheck.addEventListener("calciteSwitchChange", switchChanged);
-		collapseCheck.addEventListener("calciteSwitchChange", switchChanged);
-		featureNavCheck.addEventListener("calciteSwitchChange", switchChanged);
-		headingCheck.addEventListener("calciteSwitchChange", switchChanged);
-		spinnerCheck.addEventListener("calciteSwitchChange", switchChanged);
 
 		// When one of the action buttons are triggered, open the website or Directions component.
 		reactiveUtils.on(
