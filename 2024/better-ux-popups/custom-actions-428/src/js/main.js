@@ -64,7 +64,6 @@
 		arcgisDirections.view = view;
 		arcgisDirections.layer = routeLayer;
 		arcgisDirections.searchProperties = {
-			includeDefaultSources: false,
 			searchAllEnabled: false,
 			sources: [
 				pm1LayerSearchSource,
