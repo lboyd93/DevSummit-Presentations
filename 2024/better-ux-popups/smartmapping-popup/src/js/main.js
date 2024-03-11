@@ -1,4 +1,7 @@
-require(["esri/smartMapping/popup/templates"], (popupTemplateCreator) => {
+require(["esri/smartMapping/popup/templates", "esri/widgets/Expand"], (
+	popupTemplateCreator,
+	Expand
+) => {
 	const control = document.getElementById("control");
 	// Get a reference to the arcgis-layer-list component
 	const arcgisMap = document.querySelector("arcgis-map");
@@ -13,6 +16,15 @@ require(["esri/smartMapping/popup/templates"], (popupTemplateCreator) => {
 			breakpoint: false,
 			position: "bottom-left",
 		};
+		view.ui.add(
+			new Expand({
+				view,
+				content: document.getElementById("codeSnippet"),
+				expandIcon: "code",
+				expanded: false,
+			}),
+			"top-left"
+		);
 
 		const layer = view.map.findLayerById("18db3b41795-layer-3");
 		popupTemplateCreator
