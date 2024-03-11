@@ -1,4 +1,6 @@
-# Presentation Resources
+![Better UX Popups Title Slide](/2024/images/BetterUXPopups.png)
+
+# ArcGIS Maps SDK for JavaScript: Better UX with Popups Presentation Resources
 
 [PDF of Slides](https://lboyd93.github.io/DevSummit-Presentations/2024/better-ux-popups/better-ux-popups-slides.pdf)
 
