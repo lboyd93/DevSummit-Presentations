@@ -5,7 +5,9 @@
 [PDF of Slides](https://lboyd93.github.io/DevSummit-Presentations/2024/better-ux-popups/better-ux-popups-slides.pdf)
 
 ## Webmaps
-- TBD
+- [Pop-up Text Demo](https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=bda94bc6a88e45639daa35963c01830a)
+- [Pop-up Chart Color Demo](https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=961afea8afea4d629b464f762ab58194)
+- [Pop-up Arcade Chart Demo](https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=f5573d1271ed4158ba19b6578f7af15f)
 
 ## Live Links
 
