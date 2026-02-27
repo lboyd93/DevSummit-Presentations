@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      2026 Esri Developer & Technology Summit - Designing Apps with Calcite
+      Design System
+    </title>
+
+    <!-- Build info: https://js.arcgis.com/5.0/info.html -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <!-- Demo imports -->
+    <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <calcite-shell content-behind>
+      <calcite-navigation navigation-action slot="header" id="nav">
+        <calcite-navigation-logo
+          href="#"
+          icon="image-layer"
+          alt="Application logo"
+          slot="logo"
+          heading="Popup custom actions demo"
+          description="Esri Developer & Technology Summit"
+        ></calcite-navigation-logo>
+        <calcite-action-bar
+          layout="horizontal"
+          expand-disabled
+          slot="content-end"
+        >
+          <calcite-action
+            id="toggle-mode"
+            text="Toggle mode"
+            icon="brightness"
+          ></calcite-action>
+          <calcite-action
+            id="toggle-modal"
+            text="About this application"
+            icon="information"
+          ></calcite-action>
+        </calcite-action-bar>
+
+        <calcite-tooltip
+          placement="bottom"
+          reference-element="toggle-mode"
+          slot="content-end"
+          >Toggle mode</calcite-tooltip
+        >
+        <calcite-tooltip
+          placement="bottom"
+          reference-element="toggle-modal"
+          close-on-click
+          slot="content-end"
+          >About this application</calcite-tooltip
+        >
+      </calcite-navigation>
+
+      <calcite-shell-panel slot="panel-end" display-mode="float">
+        <calcite-panel
+          heading="Maps SDK for JavaScript"
+          description="Showcased product"
+        >
+          <calcite-action
+            id="toggle-instructions"
+            text="Instructions"
+            icon="lightbulb"
+            slot="header-actions-end"
+          ></calcite-action>
+          <calcite-tooltip
+            placement="bottom"
+            reference-element="toggle-instructions"
+            slot="header-actions-end"
+            >A quick get-going hint about this demo</calcite-tooltip
+          >
+          <calcite-block
+            collapsible
+            heading="Popup Visible Elements"
+            description="Configure the VisibleElements on the view's popup."
+          >
+            <calcite-icon
+              scale="s"
+              slot="icon"
+              icon="configure-popup"
+            ></calcite-icon>
+            <calcite-label layout="inline">
+              <calcite-switch id="actionBar" checked></calcite-switch>
+              actionBar
+            </calcite-label>
+            <calcite-label layout="inline">
+              <calcite-switch id="closeButton" checked></calcite-switch>
+              closeButton
+            </calcite-label>
+            <calcite-label layout="inline">
+              <calcite-switch id="collapseButton" checked></calcite-switch>
+              collapseButton
+            </calcite-label>
+            <calcite-label layout="inline">
+              <calcite-switch id="featureNavigation" checked></calcite-switch>
+              featureNavigation
+            </calcite-label>
+            <calcite-label layout="inline">
+              <calcite-switch id="heading" checked></calcite-switch>
+              heading
+            </calcite-label>
+            <calcite-label layout="inline">
+              <calcite-switch id="spinner" checked></calcite-switch>
+              spinner
+            </calcite-label>
+            <calcite-label layout="inline">
+              <calcite-switch id="featureMenuHeading" checked></calcite-switch>
+              featureMenuHeading
+            </calcite-label>
+            <calcite-label layout="inline">
+              <calcite-switch
+                id="featureListLayerTitle"
+                checked
+              ></calcite-switch>
+              featureListLayerTitle
+            </calcite-label>
+          </calcite-block>
+          <calcite-block
+            collapsible
+            heading="Initial Display Mode"
+            description="If multiple features are in the popup, this property determines if a list or individual feature is displayed first."
+          >
+            <calcite-icon scale="s" slot="icon" icon="configure"></calcite-icon>
+            <calcite-segmented-control id="initialDisplayMode" width="full">
+              <calcite-segmented-control-item value="feature" checked
+                >Feature</calcite-segmented-control-item
+              >
+              <calcite-segmented-control-item value="list"
+                >List</calcite-segmented-control-item
+              >
+            </calcite-segmented-control>
+          </calcite-block>
+
+          <calcite-notice open scale="s" slot="footer">
+            <span slot="title">What is being demonstrated?</span>
+            <span slot="message">
+              This demonstration application showcases
+              <strong>feature x</strong>, <strong>feature y</strong>, and
+              <strong>feature z</strong>, with a small bit of additional context
+              about the demo.
+            </span>
+          </calcite-notice>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <arcgis-map item-id="6136110b322c4ea38839344243cc5919">
+        <arcgis-popup slot="popup" dock-enabled></arcgis-popup>
+        <arcgis-expand slot="top-left" expand-tooltip="Get directions">
+          <arcgis-directions></arcgis-directions>
+        </arcgis-expand>
+        <arcgis-expand slot="bottom-right" expand-tooltip="Legend">
+          <arcgis-legend></arcgis-legend>
+        </arcgis-expand>
+      </arcgis-map>
+    </calcite-shell>
+
+    <!-- Demo template interactive elements -->
+    <calcite-alert open auto-close icon="effects">
+      <div slot="title">Esri Developer & Technology Summit</div>
+      <div slot="message">Welcome to beautiful Palm Springs!</div>
+    </calcite-alert>
+
+    <calcite-dialog modal id="modal" heading="About this application">
+      <div>
+        <calcite-notice open>
+          <span slot="title"
+            >This demonstration application is a companion resource to the "My
+            demo application" session at Esri Developer & Technology Summit.
+          </span>
+        </calcite-notice>
+        This example illustrates
+        <calcite-link target="_blank" href="#"> a great topic</calcite-link>.
+        <ul>
+          <li>Main point 1.</li>
+          <li>Main point 2.</li>
+          <li>Main point 3.</li>
+        </ul>
+        <calcite-link target="_blank" href="#">Learn more</calcite-link> in the
+        <calcite-link target="_blank" href="#"> documentation</calcite-link>.
+        <hr />
+        <calcite-link target="_blank" href="#"
+          >Application source code</calcite-link
+        >
+        is available in the
+        <calcite-link target="_blank" href="https://github.com/EsriDevEvents/"
+          >Esri Developer Events GitHub organization</calcite-link
+        >.
+        <hr />
+        <calcite-link target="_blank" href="#">Map data </calcite-link> is
+        sourced from Esri Data and Maps /
+        <calcite-link
+          target="_blank"
+          href="https://livingatlas.arcgis.com/en/home/"
+          >ArcGIS Living Atlas of the World</calcite-link
+        >.
+      </div>
+    </calcite-dialog>
+
+    <calcite-sheet id="sheet" display-mode="float" width-scale="m">
+      <calcite-panel
+        heading="Esri Developer & Technology Summit"
+        description="Helpful conference links"
+        closable
+        id="sheet-panel"
+      >
+        <calcite-menu
+          layout="vertical"
+          label="2026 Esri Developer & Technology Summit Menu"
+        >
+          <calcite-menu-item
+            text="2026 Esri Developer & Technology Summit Overview"
+            icon-end="launch"
+            href="https://www.esri.com/en-us/about/events/devsummit/overview"
+            target="_blank"
+          ></calcite-menu-item>
+          <calcite-menu-item
+            text="Esri Developer Events GitHub"
+            icon-end="launch"
+            href="https://github.com/EsriDevEvents"
+            target="_blank"
+          ></calcite-menu-item>
+          <calcite-menu-item
+            text="Esri.com"
+            icon-end="launch"
+            href="https://esri.com"
+            target="_blank"
+          ></calcite-menu-item>
+        </calcite-menu>
+        <calcite-notice open slot="footer" width="full" scale="s">
+          <span slot="title">Note</span>
+          <span slot="message"
+            >This is a demonstration application showcasing platform
+            functionality. While Esri strives to ensure the sample is accurate,
+            it may not reflect implementation behavior in certain
+            environments.</span
+          >
+        </calcite-notice>
+      </calcite-panel>
+    </calcite-sheet>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
