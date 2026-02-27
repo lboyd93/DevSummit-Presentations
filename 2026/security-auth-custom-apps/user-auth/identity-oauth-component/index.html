@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Access secure webmap with User Authentication</title>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type="module" src="https://jsdev.arcgis.com/5.0/"></script>
+
+    <!-- Configure the IdentityManager before ArcGIS Map Components load -->
+    <script type="module">
+      const [esriConfig, esriId, OAuthInfo] = await $arcgis.import([
+        "@arcgis/core/config.js",
+        "@arcgis/core/identity/IdentityManager.js",
+        "@arcgis/core/identity/OAuthInfo.js",
+      ]);
+
+      // Configure the portal URL and OAuth settings
+      // Replace with your actual Portal URL
+      //esriConfig.portalUrl = "YOUR_PORTAL_URL";
+
+      const oAuthInfo = new OAuthInfo({
+        // Replace with your actual App ID
+        appId: "75q1nffvVTOsyUV0",
+        // Set the portalUrl if using a portal other than ArcGIS Online.
+        //portalUrl: esriConfig.portalUrl
+      });
+      esriId.registerOAuthInfos([oAuthInfo]);
+
+    </script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <arcgis-map item-id="3773cbb4b2484cf49f0f5e8bbeeafa24">
+      <arcgis-search slot="top-right"></arcgis-search>
+      <arcgis-legend slot="bottom-left"></arcgis-legend>
+    </arcgis-map>
+  </body>
+</html>
+
