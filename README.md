@@ -6,10 +6,14 @@ This repository contains all the resources used for Esri Developer Summit presen
 ### ArcGIS Maps SDK for JavaScirpt: Better UX with Popups
 _CoAuthored with Lauren Ballantyne_
 
+![Better UX Popups Title Slide](/2026/better-ux-popups/images/BetterUXwithPopups.png)
+
 #### Page with links to [Demos](https://lboyd93.github.io/DevSummit-Presentations/2026/better-ux-popups/)
 
 ### Security and Authentication for Custom Applications
 _CoAuthored with George Owen_
+
+![Security and Authentication Title Slide](/2026/security-auth-custom-apps/images/security-auth.png)
 
 #### Page with links to [Demos](https://lboyd93.github.io/DevSummit-Presentations/2026/security-auth-custom-apps)
 
