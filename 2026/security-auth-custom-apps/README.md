@@ -1,4 +1,4 @@
-![Security and Authentication Title Slide](/images/security-auth.png)
+![Security and Authentication Title Slide](./images/security-auth.png)
 
 # Security and Authentication with Custom Applications Presentation Resources
 
