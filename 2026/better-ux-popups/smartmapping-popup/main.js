@@ -19,6 +19,17 @@
 
   const layer = arcgisMap.map.findLayerById("18db3b41795-layer-3");
   await layer.load();
+
+  // Remove fieldConfiguration & fieldInfo formatting from the layer so we can configure these manually.
+  layer.fieldConfigurations = null;
+  layer.popupTemplate.content.fieldInfos.forEach((fieldInfo) => {
+    fieldInfo.format = null;
+    fieldInfo.fieldFormat = null;
+  });
+
+
+  // TODO: add code to format the popup with FieldConfigurations
+
   const response = await popupTemplateCreator.getTemplates({
     layer: layer,
   });
