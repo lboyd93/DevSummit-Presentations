@@ -1,0 +1,31 @@
+# Node.js ArcGIS Application Credentials Server
+
+This is a demo implementation of a Node.js server that acts as a proxy service for ArcGIS application credentials.
+
+Learn more about [ArcGIS application credentials](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/app-credential-authentication/).
+
+## The problem
+
+If you use ArcGIS and need a more secure authentication method than API keys, application credentials are a possible choice. This uses the OAuth protocol `client_credentials` grant type with ArcGIS location services to request an authentication token and use it to authenticate services in your client app. However, you do not want to bake in your `clientID` and `clientSecret` in a client app as that could expose your credentials to hijacking. If a nefarious entity gets hold of your credentials they could create tokens on your behalf. To avoid that and keep your credentials secure, your client app requests authentication tokens from an app like this one. The token also expires, requiring frequent refreshing and updating the client app with valid tokens. It is also expected your server will run over HTTPS.
+
+## Install
+
+Make a copy of this folder.
+
+1. Install the dependencies with `npm install`.
+
+2. Log in with your ArcGIS account at https://www.arcgis.com. Create a new [OAuth 2.0 application](https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/tutorials/create-oauth-credentials-app-auth/online/) (you can use an existing app.) Copy the **Client ID** and **Client Secret**.
+
+3. Rename `.env.sample` to `.env`. Note `.env` is not committed to version control via `.gitignore` so your secrets are not shared. Edit this file to replace `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET` with the values from your registered application.
+
+> This demo expects a few additional environment variables in `.env`:
+> - `SESSION_SECRET`: used by `express-session`.
+> - `ENCRYPTION_KEY`: used to encrypt session data written by `session-file-store`.
+>
+> HTTPS is recommended for real deployments. For local development, the server will start over HTTP unless you provide both `SSL_KEY_PATH` and `SSL_CERT_PATH` (paths to your TLS key/cert files).
+
+4. Run the app with `npm start`. The app will listen on port 3080 at the `/auth` endpoint where it expects authorized clients to request authentication tokens.
+
+> You can set the port by setting the environment variable `PORT` in your `.env` file, the command line environment, or by editing the code.
+
+1. Use a client app to request an application token that can then be used to authenticate with ArcGIS location services. An example client app implementation can be found [here](../jsapi-app-credentials.html).
