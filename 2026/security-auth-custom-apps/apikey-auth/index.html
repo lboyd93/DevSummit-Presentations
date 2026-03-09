@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>API key with basemap styles</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+    <!-- The esriConfig variable must be defined before adding the other esri libraries -->
+    <script>
+        var esriConfig = {
+            apiKey:
+                "API_KEY",
+        };
+    </script>
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+</head>
+
+<body>
+    <arcgis-map item-id="3773cbb4b2484cf49f0f5e8bbeeafa24">
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+    </arcgis-map>
+    <script type="module">
+        const viewElement = document.querySelector("arcgis-map");
+        const [Basemap, BasemapStyle] = await $arcgis.import([
+            "@arcgis/core/Basemap.js",
+            "@arcgis/core/support/BasemapStyle.js",
+        ]);
+        await viewElement.viewOnReady();
+        const basemap = new Basemap({
+            style: new BasemapStyle({
+                //apiKey: esriConfig.apiKey,
+                id: "arcgis/human-geography",
+                language: "es", // place labels will be displayed in spanish
+            }),
+        });
+        viewElement.map.basemap = basemap;
+    </script>
+</body>
+
+</html>
